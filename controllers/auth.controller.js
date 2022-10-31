@@ -1,11 +1,11 @@
-const config = require('../config/auth.config');
-const db = require('../models');
-const User = db.user;
-const Role = db.role;
+let config = require('../config/auth.config');
+let db = require('../models');
+let User = db.user;
+let Role = db.role;
 
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-const { role } = require('../models');
+let jwt = require('jsonwebtoken');
+let bcrypt = require('bcryptjs');
+let { role } = require('../models');
 /*
 There are 3 main functions for Authentication:
 - signup: create new User in MongoDB database (role is user if not specifying role)
@@ -20,8 +20,8 @@ return user information & access Token
 */
 
 const signup = (req, res) => {
-  const { username, email, password, roles } = req.body;
-  const user = new User({
+  let { username, email, password, roles } = req.body;
+  let user = new User({
     username: username,
     email: email,
     password: bcrypt.hashSync(password, 8),
@@ -66,7 +66,7 @@ const signup = (req, res) => {
 };
 
 const signin = (req, res) => {
-  const { username, password } = req.body;
+  let { username, password } = req.body;
   User.findOne({ username: username })
     .populate('roles', '-__v')
     .exec((err, user) => {
