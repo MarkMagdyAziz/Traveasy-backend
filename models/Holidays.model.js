@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
 const holidaysSchema = new mongoose.Schema({
-    Country : String,
-    City : String,
+    // Country : String,
+    City :  {
+      type: mongoose.Schema.Types.ObjectId,
+       ref: 'City',
+     } ,
     Evaluation  : Number,
     ImgURL:String,
     Period : String ,
@@ -17,5 +20,7 @@ const holidaysSchema = new mongoose.Schema({
     ref : 'User'} 
   });
   
-  module.exports = mongoose.model('Holidays', holidaysSchema);
+
+  const holidaysModel =mongoose.model('Holidays', holidaysSchema); 
+  module.exports = holidaysModel;
   
