@@ -63,6 +63,8 @@ app.listen(PORT, () => {
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/airline.routes')(app);
+require('./routes/Flight.routes')(app);
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
