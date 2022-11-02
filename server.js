@@ -35,11 +35,6 @@ app.use(
   })
 );
 
-// routes
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to bezkoder application.' });
-});
-
 // Mongoose connection to MongoDB database
 db.mongoose
   .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
@@ -60,9 +55,15 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+// routes
+// app.get('/', (req, res) => {
+//   res.json({ message: 'Welcome to bezkoder application.' });
+// });
 
+require('./routes/upload.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
