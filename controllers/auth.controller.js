@@ -20,11 +20,15 @@ return user information & access Token
 */
 
 const signup = (req, res) => {
-  let { username, email, password, roles } = req.body;
+  let { username, email, password, roles, firstName, lastName, country, birthday } = req.body;
   let user = new User({
     username: username,
     email: email,
     password: bcrypt.hashSync(password, 8),
+    firstName: firstName,
+    lastName: lastName,
+    country: country,
+    birthday: birthday,
   });
   user.save((err, user) => {
     if (err) {
@@ -94,6 +98,10 @@ const signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        country: user.country,
+        birthday: user.birthday,
       });
     });
 };
