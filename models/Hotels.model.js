@@ -2,13 +2,16 @@ const mongoose = require('mongoose');
 
 const hotelsSchema = new mongoose.Schema({
     HotelName : String,
-    City : String,
+    City :  {
+      type: mongoose.Schema.Types.ObjectId,
+       ref: 'City',
+     } ,
     Evaluation  : Number,
     ImgURL:[String],
     Period : String,
     Single : Number,
     Double : Number,
   });
-  
-  module.exports = mongoose.model('Hotels', hotelsSchema);
-  
+    
+  const hotelsModel =mongoose.model('Hotels', hotelsSchema); 
+  module.exports = hotelsModel;

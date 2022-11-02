@@ -6,7 +6,8 @@ const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config');
 const { cityRouter } = require('./routes/city.routes');
-
+const {holidaysRouter} = require('./routes/holidays.routes')
+const { hotelsRouter } = require('./routes/hotels.routes')
 // front end credentials
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -64,6 +65,8 @@ app.listen(PORT, () => {
 
 
 app.use(["/city", "/citys"], cityRouter);
+app.use(["/holiday", "/holidays"], holidaysRouter);
+app.use(["/hotel", "/hotels"], hotelsRouter);
 
 
 require('./routes/auth.routes')(app);
@@ -92,6 +95,3 @@ function initial() {
     }
   });
 }
-
-
-
