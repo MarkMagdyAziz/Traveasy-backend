@@ -61,7 +61,7 @@ app.listen(PORT, () => {
 //   res.json({ message: 'Welcome to bezkoder application.' });
 // });
 
-app.use(["/city", "/citys"], cityRouter);
+app.use(['/city', '/citys'], cityRouter);
 
 require('./routes/upload.routes')(app);
 require('./routes/auth.routes')(app);
@@ -93,6 +93,3 @@ function initial() {
     }
   });
 }
-
-
-

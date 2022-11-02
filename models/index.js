@@ -13,8 +13,6 @@ db.holidays = require('./Holidays.model');
 db.holidaysBooking = require('./HolidaysBooking.model');
 db.hotels = require('./Hotels.model');
 
-
-
 db.ROLES = ['user', 'admin', 'moderator'];
 
 module.exports = db;

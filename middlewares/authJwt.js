@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/auth.config');
-const { role } = require('../models');
-const db = require('../models');
-const User = db.user;
-const Role = db.role;
+let jwt = require('jsonwebtoken');
+let config = require('../config/auth.config');
+let { role } = require('../models');
+let db = require('../models');
+let User = db.user;
+let Role = db.role;
 
 // check if token is provided, legal or not
 verifyToken = (req, res, next) => {

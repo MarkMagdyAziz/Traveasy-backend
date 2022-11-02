@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'country is required!!'],
     minLength: 3,
-    maxLength: 25,
   },
   birthday: { type: Date, default: Date.now() },
   roles: [
