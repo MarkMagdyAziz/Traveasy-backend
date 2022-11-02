@@ -5,6 +5,7 @@ const app = express();
 const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config');
+const { cityRouter } = require('./routes/city.routes');
 
 // front end credentials
 app.use((req, res, next) => {
@@ -60,9 +61,13 @@ app.listen(PORT, () => {
 //   res.json({ message: 'Welcome to bezkoder application.' });
 // });
 
+app.use(["/city", "/citys"], cityRouter);
+
 require('./routes/upload.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/airline.routes')(app);
+require('./routes/Flight.routes')(app);
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
@@ -88,3 +93,6 @@ function initial() {
     }
   });
 }
+
+
+

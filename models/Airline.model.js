@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const airlineSchema = new mongoose.Schema({
-    Airline : String,
+    AirlineName : String,
     Country : String,
     Evaluation  : Number,
     ImgURL:String,
-    Price : String 
+    Price : Number 
   });
   
-  module.exports = mongoose.model('Airline', hotelsSchema);
+  module.exports = mongoose.model('Airline', airlineSchema);
   
