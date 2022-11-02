@@ -14,7 +14,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No holiday given id :  ${req.params.id}`);
 
-   await holidaysModel.findById(req.params.id).populate("Tourist").populate("Guide").exec((err, holiday) => {
+   await holidaysModel.findById(req.params.id).populate('City').populate("Tourist").populate("Guide").exec((err, holiday) => {
         (!err) ? res.send(holiday)
             : console.log('error in get holiday by id : ' + JSON.stringify(err, undefined, 2))
 

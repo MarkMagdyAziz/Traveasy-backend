@@ -18,5 +18,5 @@ const holidaysBookingSchema = new mongoose.Schema({
     ref : 'User'} 
   });
   
-  module.exports = mongoose.model('HolidaysBooking', holidaysBookingSchema);
-  
+  const BookedHolidays =mongoose.model('bookedHolidays', holidaysBookingSchema); 
+  module.exports = BookedHolidays;  
