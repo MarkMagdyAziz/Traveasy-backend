@@ -10,7 +10,7 @@ module.exports = function (app){
 
  app.get('/flight', controller.GetAllFlight)
  app.get('/flight/:id', controller.GetFlightByID)
- app.get('/flightSearch',controller.SerachFlight)
+ //app.get('/flightSearch',controller.SerachFlight)
  app.put('/flight/:id',[authJwt.verifyToken],controller.updateFlight)
  app.delete('/flight/:id',[authJwt.verifyToken],controller.DeleteFlight)
  app.post('/flight',[authJwt.verifyToken],controller.CreateFlight);
