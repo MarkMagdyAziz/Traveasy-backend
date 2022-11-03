@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router();
 
-const {getAll, postHotel, deletehotel, getById,editHotel , getHotelsByEvaluation, getHotelByName, getHotelByCity} = require('../controllers/hotel.controller')
+const {getAll, postHotel, deletehotel, getById,editHotel , getHotelsByEvaluation, getHotelByName, getByCity} = require('../controllers/hotel.controller')
 
 router.get('/', getAll)
 
-router.get('/city', getHotelByCity)
 
+router.get('/city', getByCity)
 router.get('/rate', getHotelsByEvaluation)
 router.get('/name', getHotelByName)
 

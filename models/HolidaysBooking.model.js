@@ -5,7 +5,7 @@ const holidaysBookingSchema = new mongoose.Schema({
     RoomCount  : Number,    
     AdultCount : Number ,
     Child : Number,
-    Period : String,
+    Period : Number,
     IsApprove : Boolean ,
     startDate: Date,
     endDate: Date,

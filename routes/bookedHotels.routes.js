@@ -1,9 +1,13 @@
 const express = require('express')
 const router = express.Router();
 
-const {getAll,getHotelById, postBookedHotel , deleteBookedHotel,editBookedHotel , getBookedByDate} = require('../controllers/bookedHotels.controller')
+const {getAll,getHotelById, postBookedHotel , deleteBookedHotel,editBookedHotel , getBookedByDate, getAggr, getPrice} = require('../controllers/bookedHotels.controller')
 
 router.get('/', getAll)
+
+// get total price
+router.get('/agg', getAggr)
+
 
 //get data by date
 router.get('/date_range', getBookedByDate )

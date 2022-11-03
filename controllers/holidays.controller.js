@@ -1,5 +1,6 @@
 const holidaysModel = require('../models/Holidays.model')
 const ObjectId = require('mongoose').Types.ObjectId
+const CityModel = require('../models/City.model')
 
 // get all holidays
 exports.getAll = async (req, res) => {
@@ -136,5 +137,26 @@ console.log('loool')
             status: 'failure',
             error: error.message
         })
+    }
+}
+
+// search by city 
+exports.getByCity = async (req, res) => {
+    let query = {};
+
+    // Check for Search City Ref
+    if (req.query.city) {
+        const CitySearch = await CityModel.findOne(
+            { "City_Name": { $regex: new RegExp(req.query.city, "i") } }
+        )
+        query.City = CitySearch._id
+    }
+
+   try{
+   let holidays = await  holidaysModel.find(query).exec()
+        res.send(holidays)
+    
+    } catch (error) {
+        res.status(404).json(error.message)
     }
 }

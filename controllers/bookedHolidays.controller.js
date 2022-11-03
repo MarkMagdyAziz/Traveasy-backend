@@ -1,4 +1,5 @@
 const BookedHolidaysModel = require('../models/HolidaysBooking.model')
+const holidayModel = require('../models/Holidays.model') 
 const ObjectId = require('mongoose').Types.ObjectId
 
 // get all booked holidays
@@ -134,3 +135,44 @@ exports.getBookedByDate = async (req, res) => {
     }
 }
 
+
+
+
+exports.getAggr = async (req, res) => {
+
+    let query = {};
+    let price = {};
+    let {id} = req.query;
+
+// get selected BookedHolidaysModel 
+  let booked = await BookedHolidaysModel.findById(id).select('Holidays').exec()
+  query = booked.Holidays
+
+// get selected hotel id
+let holidays = await holidayModel.findById(query).exec()
+
+// get price value
+price= holidays.Price
+
+//  aggregate to sum multiply of (price * Period * RoomCount) to get total price
+ await BookedHolidaysModel.aggregate(
+   [
+     { $match :
+        { _id : ObjectId(id) } 
+         } ,
+
+    {
+        $group:  {
+            _id: null,
+            // price * Period * RoomCount
+            totalAmount: { $sum: { $multiply: [ "$RoomCount", "$Period", price ] } },
+        }
+      
+    },
+]
+)
+.then(response => {
+    res.status(200).send(response)
+}).catch(e => res.status(400).send())
+
+}
