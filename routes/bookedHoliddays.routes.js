@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router();
 
-const {getAll, postBookedHoliday , deleteBookedHoliday, getById,editBookedHoliday } = require('../controllers/bookedHolidays.controller')
+const {getAll, postBookedHoliday , deleteBookedHoliday, getById,editBookedHoliday, getBookedByDate } = require('../controllers/bookedHolidays.controller')
 
 router.get('/', getAll)
+
+//get data by date
+router.get('/date_range', getBookedByDate )
 router.get('/:id', getById)
 
 router.post('/', postBookedHoliday)

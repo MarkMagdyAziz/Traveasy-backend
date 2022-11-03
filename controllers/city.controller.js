@@ -33,6 +33,6 @@ exports.deleteCity = (req, res) => {
 
     CityModel.findByIdAndRemove(req.params.id, (err, city) => {
         (!err) ? res.send(city)
-            : console.log('error in update city: ' + JSON.stringify(err, undefined, 2))
+            : console.log('error in delete city: ' + JSON.stringify(err, undefined, 2))
     })
 }

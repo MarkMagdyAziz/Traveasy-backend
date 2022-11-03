@@ -11,7 +11,15 @@ const hotelsSchema = new mongoose.Schema({
     Period : String,
     Single : Number,
     Double : Number,
-  });
+    // startDate: Date,
+    // endDate: Date,
+    Description: String,
+    lon:String,
+    lat:String,
+    Price : Number ,
+
+  }
+  );
     
   const hotelsModel =mongoose.model('Hotels', hotelsSchema); 
   module.exports = hotelsModel;
