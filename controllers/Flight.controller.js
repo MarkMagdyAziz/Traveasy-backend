@@ -3,7 +3,7 @@ let FlightDB = db.flight;
 let airlineDB = db.airline
 const ObjectId = require('mongoose').Types.ObjectId;
 
-// get all Flight and Filtration
+// get all Flight and Filtrat
 const GetAllFlight = async (req, res) => {
     let query = {};
     // Check Filtration from request body
