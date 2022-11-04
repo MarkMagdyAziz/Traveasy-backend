@@ -7,13 +7,12 @@ module.exports = function (app) {
     next();
   });
 
-
   app.get('/test/all', controller.allAccess);
   app.get('/test/user', [authJwt.verifyToken], controller.userBoard);
   app.get('/test/moderator', [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard);
   app.get('/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
   app.get('/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.getAllUsers);
   app.get('/admin/moderators', [authJwt.verifyToken, authJwt.isAdmin], controller.getAllModerators);
+  app.get('/admin/users/filter', [authJwt.verifyToken, authJwt.isAdmin], controller.FilterUsers);
   app.put('/user/edit/:id', [authJwt.verifyToken], controller.editUserProfile);
-
 };
