@@ -6,6 +6,11 @@ const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config');
 const { cityRouter } = require('./routes/city.routes');
+const {holidaysRouter} = require('./routes/holidays.routes')
+const { hotelsRouter } = require('./routes/hotels.routes')
+const { bookedHolidaysRouter } = require('./routes/bookedHoliddays.routes')
+const { bookedHotelsRouter  } = require('./routes/bookedHotels.routes');
+const { FeedbackRouter  } = require('./routes/feedback.routes');
 
 // front end credentials
 app.use((req, res, next) => {
@@ -61,7 +66,15 @@ app.listen(PORT, () => {
 //   res.json({ message: 'Welcome to bezkoder application.' });
 // });
 
-app.use(['/city', '/citys'], cityRouter);
+
+
+app.use(["/city", "/citys"], cityRouter);
+app.use(["/holiday", "/holidays"], holidaysRouter);
+app.use(["/hotel", "/hotels"], hotelsRouter);
+app.use(["/bookedHoliday", "/bookedHolidays"], bookedHolidaysRouter);
+app.use(["/bookedHotel", "/bookedHotels"], bookedHotelsRouter);
+app.use(["/feedback", "/feedbacks"], FeedbackRouter);
+
 
 require('./routes/upload.routes')(app);
 require('./routes/auth.routes')(app);
@@ -93,4 +106,6 @@ function initial() {
       });
     }
   });
+
 }
+

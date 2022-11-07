@@ -6,10 +6,13 @@ const holidaysSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
        ref: 'City',
      } ,
+    Description: String,
     Evaluation  : Number,
     ImgURL:String,
     Period : String ,
     Price : Number ,
+    // startDate: Date,
+    // endDate: Date,
     IsBooking : Boolean ,
     Tourist :  {
        type: mongoose.Schema.Types.ObjectId,
