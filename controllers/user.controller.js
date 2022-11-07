@@ -23,21 +23,7 @@ exports.moderatorBoard = (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     const usersList = await UsersDB.find({}).populate('roles').exec();
-    const filterUsereRole = await usersList.filter((user, index, arr) => {
-      return user.roles[0].name === 'user';
-    });
-    res.send(filterUsereRole);
-  } catch (error) {
-    res.status(404).json(error.message);
-  }
-};
-exports.getAllModerators = async (req, res) => {
-  try {
-    const usersList = await UsersDB.find({}).populate('roles').exec();
-    const filterModRole = await usersList.filter((user, index, arr) => {
-      return user.roles[0].name === 'user';
-    });
-    res.send(filterModRole);
+    res.send(usersList);
   } catch (error) {
     res.status(404).json(error.message);
   }
