@@ -93,7 +93,6 @@ exports.deleteholiday = (req, res) => {
 
 // get bookedHotels by its rate
 exports.getHolidaysByEvaluation = async (req, res) => {
-console.log('loool')
     try {
         //get rate from req.query 
         let { rate } = req.query;
@@ -139,6 +138,59 @@ console.log('loool')
         })
     }
 }
+
+
+
+// get holidays by its price
+exports.getHolidayssByPrice = async (req, res) => {
+
+    try {
+        //get price from req.query 
+        let { price } = req.query;
+
+        //1. check that price is not empty
+        if (price === '') {
+            return res.status(400).json({
+                status: 'failure',
+                message: 'Please ensure you pick two dates'
+            })
+        }
+        //3. Query database using Mongoose
+        const PriceModel = await holidaysModel.find({
+            //find models that it's price is equale to/less than given price  
+
+            $or: [
+                {
+                    Price:
+                    {
+                        $eq: price
+                    }
+                }, {
+                    Price: {
+                        $lt: price
+                    }
+                }]
+
+        }).populate('City').populate("Tourist", "-password").populate("Guide", "-password").exec()
+
+        //4. Handle responses
+        if (!PriceModel) {
+            return res.status(404).json({
+                status: 'failure',
+                message: 'Could not retrieve PriceModel'
+            })
+        }
+        res.status(200).json(PriceModel)
+
+    } catch (error) {
+        return res.status(500).json({
+            status: 'failure',
+            error: error.message
+        })
+    }
+}
+
+
 
 // search by city 
 exports.getByCity = async (req, res) => {
