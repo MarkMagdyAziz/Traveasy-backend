@@ -18,7 +18,7 @@ exports.getHotelById = async(req, res) => {
 
    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotel) => {
         (!err) ? res.send(hotel)
-            : console.log('error in get hotel by id : ' + JSON.stringify(err, undefined, 2))
+            : console.log('error in get booked hotel by id : ' + JSON.stringify(err, undefined, 2))
 
     })
 }

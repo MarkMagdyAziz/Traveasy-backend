@@ -95,7 +95,7 @@ exports.deletehotel = (req, res) => {
 
 // filterations:
 
-// get bookedHotels by its rate
+// get Hotels by its rate
 exports.getHotelsByEvaluation = async (req, res) => {
 
     try {
@@ -145,11 +145,60 @@ exports.getHotelsByEvaluation = async (req, res) => {
 }
 
 
+// get Hotels by its price
+exports.getHotelsByPrice = async (req, res) => {
+
+    try {
+        //get price from req.query 
+        let { price } = req.query;
+
+        //1. check that price is not empty
+        if (price === '') {
+            return res.status(400).json({
+                status: 'failure',
+                message: 'Please ensure you pick two dates'
+            })
+        }
+        //3. Query database using Mongoose
+        const PriceModel = await hotelsModel.find({
+            //find models that it's price is equale to/less than given price  
+
+            $or: [
+                {
+                    Price:
+                    {
+                        $eq: price
+                    }
+                }, {
+                    Price: {
+                        $lt: price
+                    }
+                }]
+
+        }).populate('City').exec()
+
+        //4. Handle responses
+        if (!PriceModel) {
+            return res.status(404).json({
+                status: 'failure',
+                message: 'Could not retrieve PriceModel'
+            })
+        }
+        res.status(200).json(PriceModel)
+
+    } catch (error) {
+        return res.status(500).json({
+            status: 'failure',
+            error: error.message
+        })
+    }
+}
+
 // get hotel by it's name
 exports.getHotelByName = async (req, res) => {
 
     let { hotelName } = req.query;
-//find hotel that has name similar to hotelName
+    //find hotel that has name similar to hotelName
     await hotelsModel.find({
         HotelName: { $regex: '.*' + hotelName + '.*' }
 
@@ -171,7 +220,13 @@ exports.getByCity = async (req, res) => {
         const CitySearch = await CityModel.findOne(
             { "City_Name": { $regex: new RegExp(req.query.city, "i") } }
         )
-        query.City = CitySearch._id
+
+        try {
+            query.City = CitySearch._id
+        }
+        catch {
+            console.log('No hotels in this city')
+        }
     }
 
     try {
