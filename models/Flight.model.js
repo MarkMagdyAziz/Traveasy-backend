@@ -8,12 +8,9 @@ const flightSchema = new mongoose.Schema({
     TravellerCount : Number,
     Child : Number ,
     Infant : Number ,
-    CabinClass :String ,    
-    IsBooking : Boolean ,
-    Tourist :  {
-       type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      } ,
+    CabinClass :String ,
+    Price : Number ,     
+    IsBooking : Boolean  ,
     Airline : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Airline'
