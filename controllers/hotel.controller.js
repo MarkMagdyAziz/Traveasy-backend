@@ -15,7 +15,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
 
-    await hotelsModel.findById(req.params.id).exec((err, hotel) => {
+    await hotelsModel.findById(req.params.id).populate('City').exec((err, hotel) => {
         (!err) ? res.send(hotel)
             : console.log('error in get hotel by id : ' + JSON.stringify(err, undefined, 2))
 
