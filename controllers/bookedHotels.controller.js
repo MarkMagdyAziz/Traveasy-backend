@@ -1,6 +1,6 @@
 const BookedHotelsModel = require('../models/bookedHotels.model')
 const hotelsModel = require('../models/Hotels.model')
-// const CityModel = require('../models/City.model')
+const UserModel = require('../models/user.model')
 const ObjectId = require('mongoose').Types.ObjectId
 
 // get all booked hotels
@@ -13,10 +13,10 @@ exports.getAll = async (req, res) => {
 
 
 //get hotel by id
-exports.getHotelById = async(req, res) => {
-    (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
+exports.getHotelById = async (req, res) => {
+    (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No Bookedhotel given id :  ${req.params.id}`);
 
-   await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotel) => {
+    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotel) => {
         (!err) ? res.send(hotel)
             : console.log('error in get booked hotel by id : ' + JSON.stringify(err, undefined, 2))
 
@@ -25,48 +25,48 @@ exports.getHotelById = async(req, res) => {
 
 
 // post new hotel
-exports.postBookedHotel = async(req, res)=> {
+exports.postBookedHotel = async (req, res) => {
 
     const hotel = new BookedHotelsModel({
-        RoomCount  :req.body.roomCount,    
-        AdultCount :req.body.adultCount ,
-        Child :req.body.child,
-        Period : req.body.period,
-        Single : req.body.single,
-        Double : req.body.double,
-        IsApprove :req.body.isApprove ,
+        RoomCount: req.body.roomCount,
+        AdultCount: req.body.adultCount,
+        Child: req.body.child,
+        Period: req.body.period,
+        Single: req.body.single,
+        Double: req.body.double,
+        IsApprove: req.body.isApprove,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
-        Hotels :req.body.hotels,
-        Tourist :req.body.tourest ,
-        Guide :req.body.guide
+        Hotels: req.body.hotels,
+        Tourist: req.body.tourist,
+        Guide: req.body.guide
 
     })
-    await hotel.save((err, hotel)=> {
-        (!err) ? res.send(hotel) 
-        : console.log('error in post bookedHotel: ' + JSON.stringify(err, undefined, 2))
+    await hotel.save((err, hotel) => {
+        (!err) ? res.send(hotel)
+            : console.log('error in post bookedHotel: ' + JSON.stringify(err, undefined, 2))
 
-    }) 
+    })
 }
 
 
 // edit hotel
 exports.editBookedHotel = (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
-   
+
     var hotel = {
-        RoomCount  :req.body.roomCount,    
-        AdultCount :req.body.adultCount ,
-        Child :req.body.child,
-        Period : req.body.period,
-        Single : req.body.single,
-        Double : req.body.double,
+        RoomCount: req.body.roomCount,
+        AdultCount: req.body.adultCount,
+        Child: req.body.child,
+        Period: req.body.period,
+        Single: req.body.single,
+        Double: req.body.double,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
-        IsApprove :req.body.isApprove ,
-        Hotels :req.body.hotels,
-        Tourist :req.body.tourest ,
-        Guide :req.body.guide
+        IsApprove: req.body.isApprove,
+        Hotels: req.body.hotels,
+        Tourist: req.body.tourist,
+        Guide: req.body.guide
 
     }
 
@@ -82,7 +82,7 @@ exports.editBookedHotel = (req, res) => {
 
 
 
-// delete hotel by id
+// delete one hotel by id
 exports.deleteBookedHotel = (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel with given id :  ${req.params.id}`);
 
@@ -111,17 +111,18 @@ exports.getBookedByDate = async (req, res) => {
         }
         //3. Query database using Mongoose
         const BookedModels = await BookedHotelsModel.find({
-        //find models that it's startDate is more than given startDate & it's endDate is less than given endDate  
+            //find models that it's startDate is more than given startDate & it's endDate is less than given endDate  
             $and: [
-                { startDate: 
-                    { 
+                {
+                    startDate:
+                    {
                         $gt: new Date(new Date(startDate).setHours(00, 00, 00))
-                     }
-             }, {
-                 endDate: {
-                     $lte:new Date(new Date(endDate).setHours(23, 59, 59)) 
                     }
-                 }]
+                }, {
+                    endDate: {
+                        $lte: new Date(new Date(endDate).setHours(23, 59, 59))
+                    }
+                }]
         }).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec()
 
         //4. Handle responses
@@ -131,7 +132,7 @@ exports.getBookedByDate = async (req, res) => {
                 message: 'Could not retrieve BookedModels'
             })
         }
-        res.status(200).json( BookedModels)
+        res.status(200).json(BookedModels)
 
     } catch (error) {
         return res.status(500).json({
@@ -141,44 +142,68 @@ exports.getBookedByDate = async (req, res) => {
     }
 }
 
-
+// calc total price
 exports.getAggr = async (req, res) => {
 
     let query = {};
     let price = {};
-    let {id} = req.query;
+    let { id } = req.query;
 
-// get selected Bookedhotel 
-  let booked = await BookedHotelsModel.findById(id).select('Hotels').exec()
-  query = booked.Hotels
+    // get selected Bookedhotel 
+    let booked = await BookedHotelsModel.findById(id).select('Hotels').exec()
+    query = booked.Hotels
 
-// get selected hotel id
-let hotels = await hotelsModel.findById(query).exec()
+    // get selected hotel id
+    let hotels = await hotelsModel.findById(query).exec()
 
-// get price value
-price= hotels.Price
+    // get price value
+    price = hotels.Price
 
-//  aggregate to sum multiply of (price * Period * RoomCount) to get total price
- await BookedHotelsModel.aggregate(
-   [
-     { $match :
-        { _id : ObjectId(id) } 
-         } ,
+    //  aggregate to sum multiply of (price * Period * RoomCount) to get total price
+    await BookedHotelsModel.aggregate(
+        [
+            {
+                $match:
+                    { _id: ObjectId(id) }
+            },
 
-    {
-        $group:  {
-            _id: null,
-            // price * Period * RoomCount
-            totalAmount: { $sum: { $multiply: [ "$RoomCount", "$Period", price ] } },
-        }
-      
-    },
-]
-)
-.then(response => {
-    res.status(200).send(response)
-}).catch(e => res.status(400).send())
+            {
+                $group: {
+                    _id: null,
+                    // price * Period * RoomCount
+                    totalAmount: { $sum: { $multiply: ["$RoomCount", "$Period", price] } },
+                }
+
+            },
+        ]
+    )
+        .then(response => {
+            res.status(200).send(response)
+        }).catch(e => res.status(400).send())
 
 }
 
+// get BookedHotels by userName
+exports.getByUserName = async (req, res) => {
+    let query = {};
 
+    // Check for Tourist Ref
+    if (req.query.user) {
+        console.log(req.query.user);
+        const TouristSearch = await UserModel.findOne(
+            { "username": { $regex: new RegExp(req.query.user, "i") } }
+        )
+        try {
+            query.Tourist = TouristSearch._id
+        }
+        catch {
+            console.log('This user has not booked any')
+        }
+    }
+    try {
+        let bookedHotels = await BookedHotelsModel.find(query).exec()
+        res.send(bookedHotels)
+    } catch (error) {
+        res.status(404).json(error.message)
+    }
+}
