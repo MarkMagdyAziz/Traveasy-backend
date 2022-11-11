@@ -102,6 +102,7 @@ const signin = (req, res) => {
         lastName: user.lastName,
         country: user.country,
         birthday: user.birthday,
+        accessToken: token,
       });
     });
 };

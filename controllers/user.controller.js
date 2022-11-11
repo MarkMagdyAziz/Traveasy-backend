@@ -20,8 +20,6 @@ exports.moderatorBoard = (req, res) => {
   res.status(200).send('Moderator Content.');
 };
 
-// api user , moderator  - edit profile - get user, moderator
-
 // Filter users & search user
 exports.FilterUsers = async (req, res) => {
   let query = {};
@@ -68,7 +66,6 @@ exports.getAllUsers = async (req, res) => {
     res.status(404).json(error.message);
   }
 };
-
 
 exports.editUserProfile = async (req, res) => {
   let { username, email, password, firstName, lastName, country, birthday } = req.body;
