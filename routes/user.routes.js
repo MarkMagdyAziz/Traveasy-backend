@@ -9,7 +9,7 @@ module.exports = function (app) {
 
   app.get('/test/all', controller.allAccess);
   app.get('/test/user', [authJwt.verifyToken], controller.userBoard);
-  app.get('/test/moderator', [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard);
+  app.get('/test/mod', [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard);
   app.get('/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
   app.get('/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.getAllUsers);
   app.get('/admin/users/filter', [authJwt.verifyToken, authJwt.isAdmin], controller.FilterUsers);
