@@ -5,10 +5,11 @@ const bookedHotelsSchema = new mongoose.Schema({
     RoomCount  : Number,    
     AdultCount : Number ,
     Child : Number,
-    //period is days number
     Period : Number,
+
     Single : Number,
     Double : Number,
+
     IsApprove : Boolean ,
     startDate: Date,
     endDate: Date,
@@ -16,6 +17,7 @@ const bookedHotelsSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
        ref: 'Hotels',
      } ,
+
     Tourist :  {
        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

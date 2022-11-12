@@ -108,17 +108,18 @@ exports.getHolidaysByEvaluation = async (req, res) => {
         const RateModels = await holidaysModel.find({
         //find models that it's rate is equale/more than given rate  
 
-            $or: [
-                { Evaluation: 
-                    { 
-                        $eq: rate  
-                   }
-             }, {
+        $or: [
+            {
+                Evaluation:
+                {
+                    $eq: rate
+                }
+            },
+             {
                 Evaluation: {
-                     $gt:rate 
-                    }
-                 }]
-
+                    $lt: rate
+                }
+            }]
 
         }).populate('City').exec()
 
@@ -205,7 +206,7 @@ exports.getByCity = async (req, res) => {
     }
 
    try{
-   let holidays = await  holidaysModel.find(query).exec()
+   let holidays = await  holidaysModel.find(query).populate('City').exec()
         res.send(holidays)
     
     } catch (error) {

@@ -32,6 +32,7 @@ exports.postBookedHoliday = async (req, res) => {
         AdultCount: req.body.adultCount,
         Child: req.body.child,
         Period: req.body.period,
+        Transport: req.body.transport,
         IsApprove: req.body.isApprove,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
@@ -190,7 +191,7 @@ exports.getByUserName = async (req, res) => {
             { "username": { $regex: new RegExp(req.query.user, "i") } }
         )
         try {
-            
+
             query.Tourist = TouristSearch._id
         }
         catch {
@@ -198,7 +199,7 @@ exports.getByUserName = async (req, res) => {
         }
     }
     try {
-        let bookedHolidays = await BookedHolidaysModel.find(query).exec()
+        let bookedHolidays = await BookedHolidaysModel.find(query).populate('Holidays').exec()
         res.send(bookedHolidays)
     } catch (error) {
         res.status(404).json(error.message)

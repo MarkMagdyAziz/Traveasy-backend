@@ -201,7 +201,7 @@ exports.getByUserName = async (req, res) => {
         }
     }
     try {
-        let bookedHotels = await BookedHotelsModel.find(query).exec()
+        let bookedHotels = await BookedHotelsModel.find(query).populate('Hotels').exec()
         res.send(bookedHotels)
     } catch (error) {
         res.status(404).json(error.message)

@@ -5,12 +5,14 @@ const FeedbachSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
          ref: 'Hotels',
        },
-      Guide : {type : mongoose.Schema.Types.ObjectId ,
+      Tourist : {type : mongoose.Schema.Types.ObjectId ,
       ref : 'User'
       } ,
       Description: String,
 
 
-});
+},
+  
+{ timestamps: true });
 const feedbackModel =mongoose.model('feedback', FeedbachSchema); 
 module.exports = feedbackModel;

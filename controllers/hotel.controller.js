@@ -119,9 +119,10 @@ exports.getHotelsByEvaluation = async (req, res) => {
                     {
                         $eq: rate
                     }
-                }, {
+                },
+                 {
                     Evaluation: {
-                        $gt: rate
+                        $lt: rate
                     }
                 }]
 
@@ -230,7 +231,7 @@ exports.getByCity = async (req, res) => {
     }
 
     try {
-        let hotels = await hotelsModel.find(query).exec()
+        let hotels = await hotelsModel.find(query).populate('City').exec()
         res.send(hotels)
 
     } catch (error) {
