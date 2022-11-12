@@ -9,11 +9,13 @@ const holidaysBookingSchema = new mongoose.Schema({
     IsApprove : Boolean ,
     startDate: Date,
     endDate: Date,
-    transport: [String],
+    Transport: String,
+    // Transport: [String],
     Holidays :  {
       type: mongoose.Schema.Types.ObjectId,
        ref: 'Holidays',
      } ,
+
     Tourist :  {
        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
