@@ -10,6 +10,17 @@ exports.getAll = async (req, res) => {
     })
 }
 
+// get first 3 hotels
+exports.getLimit = async (req, res) => {
+  const AllHotels=  await hotelsModel.find({})
+  .limit(3) 
+  .populate('City')
+        .exec((err, hotels) => {
+            (!err) ? res.send(hotels)
+                : console.log('error in get all hotels: ' + JSON.stringify(err, undefined, 2))
+        })
+}
+
 
 //get hotel by id
 exports.getById = async (req, res) => {

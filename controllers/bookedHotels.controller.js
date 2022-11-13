@@ -183,6 +183,7 @@ exports.getAggr = async (req, res) => {
 
 }
 
+
 // get BookedHotels by userName
 exports.getByUserName = async (req, res) => {
     let query = {};
