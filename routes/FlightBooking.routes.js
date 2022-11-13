@@ -13,7 +13,7 @@ module.exports = function (app){
  //app.get('/flightBookingSearch',controller.SerachFlightBooking)
  app.put('/flightBooking/:id',[authJwt.verifyToken],controller.updateFlightBooking)
  app.delete('/flightBooking/:id',[authJwt.verifyToken],controller.DeleteFlightBooking)
- app.post('/flightBooking',[authJwt.verifyToken],controller.CreateFlightBooking);
+ app.post('/flightBooking',controller.CreateFlightBooking);
  
 
 }
