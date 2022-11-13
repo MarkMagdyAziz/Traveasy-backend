@@ -25,6 +25,8 @@ const GetAllFlight = async (req, res) => {
         query.Price = req.query.Price
     if (req.query.IsBooking)
         query.IsBooking = req.query.IsBooking
+    else
+        query.IsBooking = false
 
     // create Search for eny keyword 
     if (req.query.keyword) {
