@@ -42,8 +42,8 @@ exports.postHotel = (req, res) => {
         Evaluation: req.body.evaluation,
         ImgURL: req.body.img,
         Period: req.body.period,
-        Single: req.body.single,
-        Double: req.body.double,
+        // Single: req.body.single,
+        // Double: req.body.double,
         Description: req.body.description,
         lon: req.body.lon,
         lat: req.body.lat,
@@ -57,6 +57,8 @@ exports.postHotel = (req, res) => {
             : console.log('error in post hotel: ' + JSON.stringify(err, undefined, 2))
 
     })
+    console.log('in post')
+
 }
 
 
@@ -70,8 +72,8 @@ exports.editHotel = (req, res) => {
         Evaluation: req.body.evaluation,
         ImgURL: req.body.img,
         Period: req.body.period,
-        Single: req.body.single,
-        Double: req.body.double,
+        // Single: req.body.single,
+        // Double: req.body.double,
         Description: req.body.description,
         lon: req.body.lon,
         lat: req.body.lat,
@@ -87,6 +89,7 @@ exports.editHotel = (req, res) => {
             (!err) ? res.send(hotel)
                 : console.log('error in update hotel: ' + JSON.stringify(err, undefined, 2))
         })
+        console.log('in edit')
 }
 
 
