@@ -4,7 +4,9 @@ const CityModel = require('../models/City.model')
 
 // get all holidays
 exports.getAll = async (req, res) => {
-    await holidaysModel.find({}).populate('City').populate("Tourist", "-password").populate("Guide", "-password").exec((err, holidays) => {
+    await holidaysModel.find({}).populate('City')
+    // .populate("Tourist", "-password")
+    .populate("Guide", "-password").exec((err, holidays) => {
         (!err) ? res.send(holidays)
             : console.log('error in get all holidays: ' + JSON.stringify(err, undefined, 2))
     })
@@ -32,8 +34,8 @@ exports.postHoliday = async(req, res)=> {
           ImgURL:req.body.img,
           Period : req.body.period ,
           Price : req.body.price ,
-          IsBooking : req.body.isBokking ,
-          Tourist :req.body.tourist ,
+        //   IsBooking : req.body.isBokking ,
+        //   Tourist :req.body.tourist ,
           Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
@@ -57,8 +59,8 @@ exports.editHoliday = (req, res) => {
           ImgURL:req.body.img,
           Period : req.body.period ,
           Price : req.body.price ,
-          IsBooking : req.body.isBokking ,
-          Tourist :req.body.tourist ,
+        //   IsBooking : req.body.isBokking ,
+        //   Tourist :req.body.tourist ,
           Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
