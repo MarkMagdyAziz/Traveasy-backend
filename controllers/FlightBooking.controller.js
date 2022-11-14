@@ -1,6 +1,6 @@
 let db = require('../models');
 let FlightBookingDB = db.flightBooking;
-let TouristDB = db.Tourist;
+let TouristDB = db.user;
 let FlightDB = db.flight;
 const ObjectId = require('mongoose').Types.ObjectId;
 
