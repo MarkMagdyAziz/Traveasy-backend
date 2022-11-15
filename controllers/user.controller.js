@@ -88,3 +88,13 @@ exports.editUserProfile = async (req, res) => {
     res.status(404).json(error.message);
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  let { userId } = req.body;
+  try {
+    await UsersDB.findByIdAndRemove({ userId });
+    res.status(200).send('Removed Successfuly!');
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};
