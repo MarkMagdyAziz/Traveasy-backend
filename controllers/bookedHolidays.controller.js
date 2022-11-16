@@ -68,7 +68,7 @@ exports.editBookedHoliday = (req, res) => {
     }
 
 
-    BookedHolidaysModel.findOneAndUpdate(req.params.id, { $set: holiday }, { new: true },
+    BookedHolidaysModel.findByIdAndUpdate(req.params.id, { $set: holiday }, { new: true },
         (err, holiday) => {
             (!err) ? res.send(holiday)
                 : console.log('error in update bookedholiday: ' + JSON.stringify(err, undefined, 2))
