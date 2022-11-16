@@ -13,6 +13,6 @@ module.exports = function (app) {
   app.get('/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
   app.get('/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.getAllUsers);
   app.get('/admin/users/filter', [authJwt.verifyToken, authJwt.isAdmin], controller.FilterUsers);
-  app.delete('/admin/users/remove', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser);
+  app.delete('/admin/users/remove/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser);
   app.put('/user/edit/:id', [authJwt.verifyToken], controller.editUserProfile);
 };
