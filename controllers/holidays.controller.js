@@ -48,7 +48,6 @@ exports.postHoliday = async(req, res)=> {
     }) 
 }
 
-
 // edit holiday
 exports.editHoliday = (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No Holiday given id :  ${req.params.id}`);
@@ -67,12 +66,16 @@ exports.editHoliday = (req, res) => {
 
     }
 
+    try{ holidaysModel.findByIdAndUpdate(req.params.id, { $set: holiday }, { new: true }).exec()
+ 
+    res.status(200).send(holiday)
+    console.log('in edit'+ holiday)
 
-    holidaysModel.findOneAndUpdate(req.params.id, { $set: holiday }, { new: true },
-        (err, holiday) => {
-            (!err) ? res.send(holiday)
-                : console.log('error in update holiday: ' + JSON.stringify(err, undefined, 2))
-        })
+}catch(err){
+res.status(400).json(error.message);
+
+}
+    console.log('in edit')
 }
 
 

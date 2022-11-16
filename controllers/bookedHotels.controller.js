@@ -71,7 +71,7 @@ exports.editBookedHotel = (req, res) => {
     }
 
 
-    BookedHotelsModel.findOneAndUpdate(req.params.id, { $set: hotel }, { new: true },
+    BookedHotelsModel.findByIdAndUpdate(req.params.id, { $set: hotel }, { new: true },
         (err, hotel) => {
             (!err) ? res.send(hotel)
                 : console.log('error in update bookedhotel: ' + JSON.stringify(err, undefined, 2))

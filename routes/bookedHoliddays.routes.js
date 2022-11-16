@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
+const {authJwt} = require('../middlewares')
 const { getAll, postBookedHoliday, deleteBookedHoliday, getById, editBookedHoliday, getBookedByDate, getAggr, getByUserName } = require('../controllers/bookedHolidays.controller')
 
 
@@ -14,13 +15,16 @@ router.get('/agg', getAggr)
 router.get('/date_range', getBookedByDate)
 
 //get data by user
-router.get('/user', getByUserName)
-router.get('/:id', getById)
+router.get('/user', [authJwt.verifyToken] ,getByUserName)
 
-router.post('/', postBookedHoliday)
+router.get('/:id',[authJwt.verifyToken] , getById)
 
+router.post('/',[authJwt.verifyToken] , postBookedHoliday)
+
+// router.put('/:id',[authJwt.verifyToken] , editBookedHoliday)
 router.put('/:id', editBookedHoliday)
 
+// router.delete('/:id',[authJwt.verifyToken] , deleteBookedHoliday)
 router.delete('/:id', deleteBookedHoliday)
 
 module.exports = { bookedHolidaysRouter: router };
