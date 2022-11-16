@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router();
+const {authJwt} = require('../middlewares')
 
 const { getAll, postHoliday, deleteholiday, getById, editHoliday, getHolidaysByEvaluation, getByCity, getHolidayssByPrice } = require('../controllers/holidays.controller')
 
@@ -14,10 +15,12 @@ router.get('/price', getHolidayssByPrice)
 
 router.get('/:id', getById)
 
+// router.post('/',[authJwt.verifyToken] , postHoliday)
 router.post('/', postHoliday)
 
+// router.put('/:id',[authJwt.verifyToken] , editHoliday)
 router.put('/:id', editHoliday)
 
-router.delete('/:id', deleteholiday)
+router.delete('/:id',[authJwt.verifyToken] , deleteholiday)
 
 module.exports = { holidaysRouter: router };

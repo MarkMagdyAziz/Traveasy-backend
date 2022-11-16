@@ -71,6 +71,7 @@ const signup = (req, res) => {
 
 const signin = (req, res) => {
   let { username, password } = req.body;
+
   User.findOne({ username: username })
     .populate('roles', '-__v')
     .exec((err, user) => {

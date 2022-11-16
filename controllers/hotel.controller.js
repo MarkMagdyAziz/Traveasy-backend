@@ -84,12 +84,16 @@ exports.editHotel = (req, res) => {
     }
 
 
-    hotelsModel.findOneAndUpdate(req.params.id, { $set: hotel }, { new: true },
-        (err, hotel) => {
-            (!err) ? res.send(hotel)
-                : console.log('error in update hotel: ' + JSON.stringify(err, undefined, 2))
-        })
-        console.log('in edit')
+   try{ hotelsModel.findByIdAndUpdate(req.params.id, { $set: hotel }, { new: true }).exec()
+ 
+        res.status(200).send(hotel)
+        console.log('in edit'+ hotel)
+
+   }catch(err){
+    res.status(400).json(error.message);
+
+   }
+        console.log('in hotel edit')
 }
 
 
