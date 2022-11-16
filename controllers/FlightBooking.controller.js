@@ -6,13 +6,10 @@ const ObjectId = require('mongoose').Types.ObjectId;
 var nodemailer = require('nodemailer');
 let config = require('../config/mailer.config')
 
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: config.EMAIL_USERNAME,
-        pass: config.PASSWORD
-    }
-});
+
+ 
+
+
 
 // get all FlightBooking
 const GetAllFlightBooking = async (req, res) => {
@@ -71,11 +68,11 @@ const CreateFlightBooking = async (req, res) => {
     const Tourist = await TouristDB.findById(req.body.Tourist).exec()
     // colling Function Healper For Cheek true is boogink 
     const Flight = await FlightDB.findByIdAndUpdate(req.body.Flight
-        , { NumberTickets: NumberTickets - 1 }).exec()
+        , { $inc: { NumberTickets: - 1 } }).exec()
 
     // Config Email 
     var mailConfigurations = {
-        from: 'ibrahimjpm8@gmail.com',
+        from: 'traveasycompany@gmail.com',
         to: Tourist.email,
         subject: 'booking confirmed',
         html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
@@ -89,10 +86,10 @@ const CreateFlightBooking = async (req, res) => {
         <p>Infant: ${Flight.Infant}</p>
         <p>Cabin Class: ${Flight.CabinClass}</p>`
     };
+    console.log("mailConfigurations " + Flight);
 
-
-    transporter.sendMail(mailConfigurations, function (error, info) {
-        if (error) throw Error(error);
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
         console.log('Email Sent Successfully');
         console.log(info);
     })
