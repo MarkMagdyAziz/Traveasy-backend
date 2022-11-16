@@ -25,8 +25,10 @@ const GetAllFlight = async (req, res) => {
         query.Price = req.query.Price
     if (req.query.IsBooking)
         query.IsBooking = req.query.IsBooking
-    else
-        query.IsBooking = false
+    if (req.query.NumberTickets)
+        query.NumberTickets = req.query.NumberTickets
+
+
 
     // create Search for eny keyword 
     if (req.query.keyword) {
@@ -51,7 +53,7 @@ const GetAllFlight = async (req, res) => {
     try {
         const FlightList = await FlightDB.find(query)
             .skip(page)
-            .limit(5)
+            .limit(10)
             .populate('Airline', 'AirlineName')
             // .sort({DepartureDate : -1})
             .exec();
@@ -90,7 +92,8 @@ const CreateFlight = (req, res) => {
         Infant: req.body.Infant,
         CabinClass: req.body.CabinClass,
         IsBooking: req.body.IsBooking,
-        Airline: req.body.Airline
+        Airline: req.body.Airline,
+        NumberTickets: req.body.NumberTickets
     });
 
     FlightModel.save((err, model) => {
@@ -119,7 +122,8 @@ const updateFlight = async (req, res) => {
         Infant: req.body.Infant,
         CabinClass: req.body.CabinClass,
         IsBooking: req.body.IsBooking,
-        Airline: req.body.Airline
+        Airline: req.body.Airline,
+        NumberTickets: req.body.NumberTickets
     };
 
     try {

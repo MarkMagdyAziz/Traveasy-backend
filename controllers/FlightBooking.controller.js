@@ -3,6 +3,13 @@ let FlightBookingDB = db.flightBooking;
 let TouristDB = db.user;
 let FlightDB = db.flight;
 const ObjectId = require('mongoose').Types.ObjectId;
+var nodemailer = require('nodemailer');
+let config = require('../config/mailer.config')
+
+
+ 
+
+
 
 // get all FlightBooking
 const GetAllFlightBooking = async (req, res) => {
@@ -57,10 +64,35 @@ const CreateFlightBooking = async (req, res) => {
         IsBooking: req.body.IsBooking,
         Flight: req.body.Flight
     });
+
+    const Tourist = await TouristDB.findById(req.body.Tourist).exec()
     // colling Function Healper For Cheek true is boogink 
-    const _id = req.body.Flight ;  
-     const rsult  =  await FlightDB.findByIdAndUpdate(_id
-        , { IsBooking : true  }).exec()  
+    const Flight = await FlightDB.findByIdAndUpdate(req.body.Flight
+        , { $inc: { NumberTickets: - 1 } }).exec()
+
+    // Config Email 
+    var mailConfigurations = {
+        from: 'traveasycompany@gmail.com',
+        to: Tourist.email,
+        subject: 'booking confirmed',
+        html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
+        <h5> booking confirmed .</h5>
+        <p >DepartureDate : ${Flight.DepartureDate} </p>
+        <p >ReturnDate : ${Flight.ReturnDate}</p>     
+        <p>Flying From: ${Flight.FlyingFrom}</p>
+        <p>FlyingTo: ${Flight.FlyingTo}</p>
+        <p>TravellerCount : ${Flight.TravellerCount}</p>
+        <p>Child: ${Flight.Child}</p>
+        <p>Infant: ${Flight.Infant}</p>
+        <p>Cabin Class: ${Flight.CabinClass}</p>`
+    };
+    console.log("mailConfigurations " + Flight);
+
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
+        console.log('Email Sent Successfully');
+        console.log(info);
+    })
 
     FlightBookingModel.save((err, model) => {
         if (err) {
@@ -85,7 +117,7 @@ const updateFlightBooking = async (req, res) => {
 
     try {
         const FlyingObjUpd = await FlightBookingDB.findByIdAndUpdate(_id
-            , { $set: FlyingObj }, { new: true }).exec()                 
+            , { $set: FlyingObj }, { new: true }).exec()
         res.status(200).send(FlyingObjUpd)
     } catch (error) {
         res.status(400).json(error.message);

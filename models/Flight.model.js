@@ -11,6 +11,7 @@ const flightSchema = new mongoose.Schema({
     CabinClass :String ,
     Price : Number ,     
     IsBooking : Boolean  ,
+    NumberTickets : Number ,
     Airline : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Airline'
