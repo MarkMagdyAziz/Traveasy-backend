@@ -90,10 +90,11 @@ exports.editUserProfile = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  let { userId } = req.body;
+  const _id = req.params.id;
+  console.log(_id);
   try {
-    await UsersDB.findByIdAndRemove({ userId });
-    res.status(200).send('Removed Successfuly!');
+    await UsersDB.findByIdAndRemove({ _id });
+    res.status(200).json('Removed Successfuly');
   } catch (error) {
     res.status(404).json(error.message);
   }
