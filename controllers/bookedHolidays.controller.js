@@ -18,7 +18,7 @@ exports.getById = async (req, res) => {
 
     await BookedHolidaysModel.findById(req.params.id).populate('Holidays').populate("Tourist", "-password").populate("Guide", "-password").exec((err, holiday) => {
         (!err) ? res.send(holiday)
-            : console.log('error in get holiday by id : ' + JSON.stringify(err, undefined, 2))
+            : console.log('error in get booked holiday by id : ' + JSON.stringify(err, undefined, 2))
 
     })
 }
