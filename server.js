@@ -43,9 +43,7 @@ app.use(
 
 // Mongoose connection to MongoDB database
 //`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
-// 'mongodb+srv://traveasy_db:oOq6ioaNBgbne6fc@clustertraveasydb.yivj1rk.mongodb.net/test'
-db.mongoose
-  // Concat to atlis
+
   .connect('mongodb+srv://traveasy_db:oOq6ioaNBgbne6fc@clustertraveasydb.yivj1rk.mongodb.net/test', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
