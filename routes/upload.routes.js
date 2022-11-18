@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authJwt } = require('../middlewares');
 
 const uploadController = require('../controllers/upload.controller');
 
@@ -15,9 +16,9 @@ module.exports = (app) => {
   });
   app.get('/images', uploadViews);
 
-  app.post('/upload', uploadController.uploadFiles);
-  app.get('/files', uploadController.getListFiles);
+  app.post('/upload',  uploadController.uploadFiles);
+  app.get('/files',  uploadController.getListFiles);
   app.get('/files/:name', uploadController.download);
 
-  // return app.use('/', router);
+  //return app.use('/', router);
 };
