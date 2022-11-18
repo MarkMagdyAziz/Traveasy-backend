@@ -77,7 +77,6 @@ exports.getAllUsers = async (req, res) => {
 
 exports.editUserProfile = async (req, res) => {
   let { username, email, password, firstName, lastName, country, birthday } = req.body;
-  console.log(req.body);
   const _id = req.params.id;
   let userObj = {
     username: username,
@@ -99,7 +98,6 @@ exports.editUserProfile = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   const _id = req.params.id;
-  console.log(_id);
   try {
     await UsersDB.findByIdAndRemove({ _id });
     res.status(200).json('Removed Successfuly');
