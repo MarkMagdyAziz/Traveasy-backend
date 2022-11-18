@@ -146,10 +146,9 @@ exports.getHolidaysByEvaluation = async (req, res) => {
 }
 
 
-
 // get holidays by its price
 exports.getHolidayssByPrice = async (req, res) => {
-
+    
     try {
         //get price from req.query 
         let { price } = req.query;
@@ -177,7 +176,7 @@ exports.getHolidayssByPrice = async (req, res) => {
                     }
                 }]
 
-        }).populate('City').populate("Tourist", "-password").populate("Guide", "-password").exec()
+        }).populate('City').populate("Guide", "-password").exec()
 
         //4. Handle responses
         if (!PriceModel) {

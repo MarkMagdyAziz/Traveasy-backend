@@ -1,6 +1,14 @@
 let db = require('../models');
 let UsersDB = db.user;
 let RolesDB = db.role;
+let AirlineDB = db.airline;
+let FlightDB = db.flight;
+let FlightBookingDB = db.flightBooking;
+let BookedHolidaysModel = require('../models/HolidaysBooking.model');
+let BookedHotelsModel = require('../models/bookedHotels.model');
+let CityModel = require('../models/City.model');
+let FeedbackModel = require('../models/feedback.model');
+let HotelModel = require('../models/Hotels.model');
 
 let bcrypt = require('bcryptjs');
 
@@ -95,6 +103,36 @@ exports.deleteUser = async (req, res) => {
   try {
     await UsersDB.findByIdAndRemove({ _id });
     res.status(200).json('Removed Successfuly');
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+};
+
+exports.statistics = async (req, res) => {
+  try {
+    let usersCount = await UsersDB.find({}).count();
+    let airlineCount = await AirlineDB.find({}).count();
+    let flightCount = await FlightDB.find({}).count();
+    let flightBookingCount = await FlightBookingDB.find({}).count();
+    let bookedHolidaysCount = await FlightBookingDB.find({}).count();
+    let bookedHotels = await BookedHotelsModel.find({}).count();
+    let hotelCount = await HotelModel.find({}).count();
+    let feedbackCount = await FeedbackModel.find({}).count();
+    let cityCount = await CityModel.find({}).count();
+    let bookedHolidaysModel = await BookedHolidaysModel.find({}).count();
+
+    res.status(200).json({
+      usersCount: usersCount,
+      airlineCount: airlineCount,
+      flightCount: flightCount,
+      flightBookingCount: flightBookingCount,
+      bookedHolidaysCount: bookedHolidaysCount,
+      bookedHotels: bookedHotels,
+      hotelCount: hotelCount,
+      feedbackCount: feedbackCount,
+      cityCount: cityCount,
+      bookedHolidaysModel: bookedHolidaysModel,
+    });
   } catch (error) {
     res.status(404).json(error.message);
   }
