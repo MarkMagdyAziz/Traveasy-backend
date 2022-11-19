@@ -62,8 +62,10 @@ const CreateFlightBooking = async (req, res) => {
     let FlightBookingModel = new FlightBookingDB({
         Tourist: req.body.Tourist,
         IsBooking: req.body.IsBooking,
-        Flight: req.body.Flight
-    });
+        Flight: req.body.Flight ,
+        PassportNumber : req.body.PassportNumber ,
+        IsPaid : req.body.IsPaid 
+        });
 
     const Tourist = await TouristDB.findById(req.body.Tourist).exec()
     // colling Function Healper For Cheek true is boogink 
@@ -112,7 +114,9 @@ const updateFlightBooking = async (req, res) => {
     const FlyingObj = {
         Tourist: req.body.Tourist,
         IsBooking: req.body.IsBooking,
-        Flight: req.body.Flight
+        Flight: req.body.Flight ,
+        PassportNumber : req.body.PassportNumber ,
+        IsPaid : req.body.IsPaid 
     };
 
     try {
