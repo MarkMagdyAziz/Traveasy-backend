@@ -12,12 +12,22 @@ exports.getAll = async (req, res) => {
     })
 }
 
+// get first 3 holidays
+exports.getLimit = async (req, res) => {
+    await holidaysModel.find({})
+    .limit(2) 
+    .populate('City')
+          .exec((err, holiday) => {
+              (!err) ? res.send(holiday)
+                  : console.log('error in get limit holidays: ' + JSON.stringify(err, undefined, 2))
+          })
+  }
 
 //get holidy by id
 exports.getById = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No holiday given id :  ${req.params.id}`);
 
-   await holidaysModel.findById(req.params.id).populate('City').populate("Tourist", "-password").populate("Guide", "-password").exec((err, holiday) => {
+   await holidaysModel.findById(req.params.id).populate('City').populate("Guide", "-password").exec((err, holiday) => {
         (!err) ? res.send(holiday)
             : console.log('error in get holiday by id : ' + JSON.stringify(err, undefined, 2))
 

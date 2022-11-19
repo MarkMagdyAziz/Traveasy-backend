@@ -13,8 +13,8 @@ router.get('/hotel',getByHotelName)
 // get feedbacks by hotelId
 router.get('/hotelid',getByHotelID)
 
-// router.post('/', [authJwt.verifyToken] , postFeedback)
-router.post('/',  postFeedback)
+router.post('/', [authJwt.verifyToken] , postFeedback)
+// router.post('/',  postFeedback)
 
 router.delete('/:id', deleteFeedback)
 

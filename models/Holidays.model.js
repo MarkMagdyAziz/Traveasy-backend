@@ -20,6 +20,7 @@ const holidaysSchema = new mongoose.Schema({
     ref : 'User'} 
   });
   
+  
 
   const holidaysModel =mongoose.model('Holidays', holidaysSchema); 
   module.exports = holidaysModel;

@@ -6,11 +6,11 @@ const db = require('./models');
 const Role = db.role;
 const dbConfig = require('./config/db.config');
 const { cityRouter } = require('./routes/city.routes');
-const {holidaysRouter} = require('./routes/holidays.routes')
+const { holidaysRouter } = require('./routes/holidays.routes')
 const { hotelsRouter } = require('./routes/hotels.routes')
 const { bookedHolidaysRouter } = require('./routes/bookedHoliddays.routes')
-const { bookedHotelsRouter  } = require('./routes/bookedHotels.routes');
-const { FeedbackRouter  } = require('./routes/feedback.routes');
+const { bookedHotelsRouter } = require('./routes/bookedHotels.routes');
+const { FeedbackRouter } = require('./routes/feedback.routes');
 
 // front end credentials
 app.use((req, res, next) => {
@@ -28,10 +28,10 @@ app.use(
 );
 
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use(
   cookieSession({
@@ -44,9 +44,8 @@ app.use(
 // Mongoose connection to MongoDB database
 db.mongoose
   //.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    // Concat to atlas
     .connect(`mongodb+srv://traveasy_db:oOq6ioaNBgbne6fc@clustertraveasydb.yivj1rk.mongodb.net/test`, {
-    useNewUrlParser: true,
+   useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
@@ -63,11 +62,6 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-// routes
-// app.get('/', (req, res) => {
-//   res.json({ message: 'Welcome to bezkoder application.' });
-// });
-
 
 
 app.use(["/city", "/citys"], cityRouter);
@@ -110,4 +104,10 @@ function initial() {
   });
 
 }
+
+
+
+
+
+
 

@@ -16,23 +16,23 @@ router.get('/agg', getAggr)
 router.get('/date_range', getBookedByDate )
 
 //get data by user
-// router.get('/user',[authJwt.verifyToken] , getByUserName )
-router.get('/:id', getByUserName)
+router.get('/user',[authJwt.verifyToken] , getByUserName )
+
+// router.get('/user', getByUserName)
 
 
 router.get('/:id',[authJwt.verifyToken] , getHotelById)
 
 
-// router.post('/',[authJwt.verifyToken] , postBookedHotel)
+router.post('/',[authJwt.verifyToken] , postBookedHotel)
 
-router.post('/',postBookedHotel)
+// router.post('/',postBookedHotel)
 
-// router.put('/:id',[authJwt.verifyToken] ,editBookedHotel)
-router.put('/:id',editBookedHotel)
+router.put('/:id',[authJwt.verifyToken, authJwt.isModerator] ,editBookedHotel)
+// router.put('/:id',editBookedHotel)
 
-// router.delete('/:id',[authJwt.verifyToken] ,deleteBookedHotel)
-router.delete('/:id',deleteBookedHotel)
-
+router.delete('/:id',[authJwt.verifyToken] ,deleteBookedHotel)
+// router.delete('/:id',deleteBookedHotel)
 
 
 
