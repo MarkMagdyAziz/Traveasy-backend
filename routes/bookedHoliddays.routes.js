@@ -15,11 +15,15 @@ router.get('/agg', getAggr)
 router.get('/date_range', getBookedByDate)
 
 //get data by user
-router.get('/user', [authJwt.verifyToken] ,getByUserName)
+// router.get('/user', [authJwt.verifyToken] ,getByUserName)
+router.get('/user' ,getByUserName)
+
 
 router.get('/:id',[authJwt.verifyToken] , getById)
 
-router.post('/',[authJwt.verifyToken] , postBookedHoliday)
+// router.post('/',[authJwt.verifyToken] , postBookedHoliday)
+
+router.post('/', postBookedHoliday)
 
 // router.put('/:id',[authJwt.verifyToken] , editBookedHoliday)
 router.put('/:id', editBookedHoliday)

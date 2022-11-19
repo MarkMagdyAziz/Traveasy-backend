@@ -50,7 +50,7 @@ exports.postBookedHotel = async (req, res) => {
 }
 
 
-// edit hotel
+// edit booked hotel
 exports.editBookedHotel = (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
 

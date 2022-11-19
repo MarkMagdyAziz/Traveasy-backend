@@ -10,14 +10,32 @@ exports.getAll = async (req, res) => {
 
     })
 }
+
+
 exports.getByHotelID = async (req, res) => {
     let query = {};
 
-    await FeedbackModel.find({Hotels:req.query.hotel}).populate("Hotels").populate("Tourist", "username").exec((err, feedback) => {
-        (!err) ? res.send(feedback)
-            : console.log('error in get feedback by id : ' + JSON.stringify(err, undefined, 2))
+   // Check for Search City Ref
+   if (req.query.hotelid) {
+    const HotelSearch = await HotelModel.findOne(
+        { "_id":(req.query.hotelid)  }
+    )
 
-    })
+    try {
+        query.Hotels = HotelSearch
+    }
+    catch {
+        console.log('No feedback for this hotel')
+    }
+}
+
+try {
+    let feedbacks = await FeedbackModel.find(query).populate('Hotels').populate("Tourist", "-password").exec()
+    res.send(feedbacks)
+
+} catch (error) {
+    res.status(404).json(error.message)
+}
 }
 
 // get hotel feedback
@@ -39,7 +57,7 @@ exports.getByHotelName = async (req, res) => {
     }
 
     try {
-        let feedbacks = await FeedbackModel.find(query).populate('Hotels').exec()
+        let feedbacks = await FeedbackModel.find(query).populate('Hotels').populate("Tourist", "-password").exec()
         res.send(feedbacks)
 
     } catch (error) {

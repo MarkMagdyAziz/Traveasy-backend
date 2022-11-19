@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router();
 const {authJwt} = require('../middlewares')
 
-const { getAll, postHoliday, deleteholiday, getById, editHoliday, getHolidaysByEvaluation, getByCity, getHolidayssByPrice } = require('../controllers/holidays.controller')
+const { getAll,getLimit ,postHoliday, deleteholiday, getById, editHoliday, getHolidaysByEvaluation, getByCity, getHolidayssByPrice } = require('../controllers/holidays.controller')
 
 router.get('/', getAll)
+
+router.get('/limit', getLimit)
 
 router.get('/rate', getHolidaysByEvaluation)
 

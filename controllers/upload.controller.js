@@ -10,10 +10,9 @@ const baseUrl = 'http://localhost:8080/files/';
 const mongoClient = new MongoClient(url);
 
 const uploadFiles = async (req, res) => {
-  try {
-    await upload(req, res);
-    console.log('sssss', req.files);
 
+  try { 
+      await upload(req, res);
     if (req.file <= 0) {
       return res.send({
         message: 'You must select at least 1 file.',
@@ -24,7 +23,7 @@ const uploadFiles = async (req, res) => {
       message: 'Files has been uploaded.',
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
 
     return res.status(500).send({
       message: `Error when trying upload many files: ${error}`,
@@ -53,7 +52,6 @@ const getListFiles = async (req, res) => {
         name: doc.filename,
         url: baseUrl + doc.filename,
       });
-      console.log('cursor:', doc);
     });
 
     return res.status(200).send(fileInfos);

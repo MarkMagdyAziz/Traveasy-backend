@@ -8,7 +8,7 @@ let Role = db.role;
 // check if token is provided, legal or not
 verifyToken = (req, res, next) => {
   // access token from header request
-  let token = req.session.token || req.headers['x-access-token'];
+  let token = req.headers['x-access-token'] || req.session.token;
   if (!token) {
     return res.status(403).send({ message: 'No token provided!' });
   }
