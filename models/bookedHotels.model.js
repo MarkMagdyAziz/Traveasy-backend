@@ -11,6 +11,7 @@ const bookedHotelsSchema = new mongoose.Schema({
     Double : Number,
 
     IsApprove : Boolean ,
+    Paid: Boolean,
     startDate: Date,
     endDate: Date,
     Hotels :  {

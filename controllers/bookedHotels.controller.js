@@ -2,6 +2,10 @@ const BookedHotelsModel = require('../models/bookedHotels.model')
 const hotelsModel = require('../models/Hotels.model')
 const UserModel = require('../models/user.model')
 const ObjectId = require('mongoose').Types.ObjectId
+let db = require('../models');
+let TouristDB = db.user;
+var nodemailer = require('nodemailer');
+let config = require('../config/mailer.config')
 
 // get all booked hotels
 exports.getAll = async (req, res) => {
@@ -35,6 +39,7 @@ exports.postBookedHotel = async (req, res) => {
         Single: req.body.single,
         Double: req.body.double,
         IsApprove: req.body.isApprove,
+        Paid:req.body.paid,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         Hotels: req.body.hotels,
@@ -42,6 +47,25 @@ exports.postBookedHotel = async (req, res) => {
         Guide: req.body.guide
 
     })
+    
+    const Tourist = await TouristDB.findById(req.body.tourist).exec()
+    
+    // Config Email 
+    var mailConfigurations = {
+        from: 'traveasycompany@gmail.com',
+        to: Tourist.email,
+        subject: 'booking confirmed',
+        html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
+        <h5> booking confirmed.</h5>`
+    };
+
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
+        console.log('Email Sent Successfully');
+        console.log(info);
+    })
+   
+   
     await hotel.save((err, hotel) => {
         (!err) ? res.send(hotel)
             : console.log('error in post bookedHotel: ' + JSON.stringify(err, undefined, 2))
@@ -51,7 +75,7 @@ exports.postBookedHotel = async (req, res) => {
 
 
 // edit booked hotel
-exports.editBookedHotel = (req, res) => {
+exports.editBookedHotel = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
 
     var hotel = {
@@ -64,11 +88,29 @@ exports.editBookedHotel = (req, res) => {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         IsApprove: req.body.isApprove,
+        Paid:req.body.paid,
         Hotels: req.body.hotels,
         Tourist: req.body.tourist,
         Guide: req.body.guide
 
     }
+
+    const Tourist = await TouristDB.findById(req.body.tourist).exec()
+    
+    // Config Email 
+    var mailConfigurations = {
+        from: 'traveasycompany@gmail.com',
+        to: Tourist.email,
+        subject: 'booking updated',
+        html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
+        <h5> Your booking status has been updated.</h5>`
+    };
+
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
+        console.log('Email Sent Successfully');
+        console.log(info);
+    })
 
 
     BookedHotelsModel.findByIdAndUpdate(req.params.id, { $set: hotel }, { new: true },
@@ -198,7 +240,7 @@ exports.getByUserName = async (req, res) => {
             query.Tourist = TouristSearch._id
         }
         catch {
-            console.log('This user has not booked any')
+            console.log('This user has not booked hotels any')
         }
     }
     try {

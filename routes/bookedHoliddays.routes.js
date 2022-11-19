@@ -15,20 +15,19 @@ router.get('/agg', getAggr)
 router.get('/date_range', getBookedByDate)
 
 //get data by user
-// router.get('/user', [authJwt.verifyToken] ,getByUserName)
-router.get('/user' ,getByUserName)
+router.get('/user', [authJwt.verifyToken] ,getByUserName)
+// router.get('/user' ,getByUserName)
 
 
 router.get('/:id',[authJwt.verifyToken] , getById)
 
-// router.post('/',[authJwt.verifyToken] , postBookedHoliday)
+router.post('/',[authJwt.verifyToken] , postBookedHoliday)
+// router.post('/', postBookedHoliday)
 
-router.post('/', postBookedHoliday)
+router.put('/:id',[authJwt.verifyToken, authJwt.isModerator] , editBookedHoliday)
+// router.put('/:id', editBookedHoliday)
 
-// router.put('/:id',[authJwt.verifyToken] , editBookedHoliday)
-router.put('/:id', editBookedHoliday)
-
-// router.delete('/:id',[authJwt.verifyToken] , deleteBookedHoliday)
-router.delete('/:id', deleteBookedHoliday)
+router.delete('/:id',[authJwt.verifyToken, authJwt.isAdmin] , deleteBookedHoliday)
+// router.delete('/:id', deleteBookedHoliday)
 
 module.exports = { bookedHolidaysRouter: router };
