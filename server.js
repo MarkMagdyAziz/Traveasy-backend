@@ -43,7 +43,6 @@ app.use(
 
 // Mongoose connection to MongoDB database
 //`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
-
   .connect('mongodb+srv://traveasy_db:oOq6ioaNBgbne6fc@clustertraveasydb.yivj1rk.mongodb.net/test', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -104,4 +103,10 @@ function initial() {
   });
 
 }
+
+
+
+
+
+
 
