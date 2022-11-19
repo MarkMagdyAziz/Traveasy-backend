@@ -17,12 +17,12 @@ router.get('/price', getHotelsByPrice)
 
 router.get('/:id', getById)
 
-// router.post('/',[authJwt.verifyToken] , postHotel)
-router.post('/',postHotel)
+router.post('/',[authJwt.verifyToken] , postHotel)
+// router.post('/',postHotel)
 
-router.put('/:id', editHotel)
+// router.put('/:id', editHotel)
 
-// router.put('/:id',[authJwt.verifyToken] , editHotel)
+router.put('/:id',[authJwt.verifyToken] , editHotel)
 
 router.delete('/:id',[authJwt.verifyToken] , deletehotel)
 

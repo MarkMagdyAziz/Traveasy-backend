@@ -2,6 +2,11 @@ const BookedHolidaysModel = require('../models/HolidaysBooking.model')
 const holidayModel = require('../models/Holidays.model')
 const UserModel = require('../models/user.model')
 const ObjectId = require('mongoose').Types.ObjectId
+let db = require('../models');
+let TouristDB = db.user;
+var nodemailer = require('nodemailer');
+let config = require('../config/mailer.config')
+
 
 // get all booked holidays
 exports.getAll = async (req, res) => {
@@ -34,6 +39,7 @@ exports.postBookedHoliday = async (req, res) => {
         Period: req.body.period,
         Transport: req.body.transport,
         IsApprove: req.body.isApprove,
+        Paid:req.body.paid,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         Holidays: req.body.holidays,
@@ -41,6 +47,23 @@ exports.postBookedHoliday = async (req, res) => {
         Guide: req.body.guide
 
     })
+    const Tourist = await TouristDB.findById(req.body.tourist).exec()
+    
+    // Config Email 
+    var mailConfigurations = {
+        from: 'traveasycompany@gmail.com',
+        to: Tourist.email,
+        subject: 'booking confirmed',
+        html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
+        <h5> booking confirmed.</h5>`
+    };
+
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
+        console.log('Email Sent Successfully');
+        console.log(info);
+    })
+
     await holiday.save((err, holiday) => {
         (!err) ? res.send(holiday)
             : console.log('error in post Holiday: ' + JSON.stringify(err, undefined, 2))
@@ -50,7 +73,7 @@ exports.postBookedHoliday = async (req, res) => {
 
 
 // edit holiday
-exports.editBookedHoliday = (req, res) => {
+exports.editBookedHoliday = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No Holiday given id :  ${req.params.id}`);
 
     var holiday = {
@@ -59,6 +82,7 @@ exports.editBookedHoliday = (req, res) => {
         Child: req.body.child,
         Period: req.body.period,
         IsApprove: req.body.isApprove,
+        Paid:req.body.paid,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         Holidays: req.body.holidays,
@@ -67,6 +91,22 @@ exports.editBookedHoliday = (req, res) => {
 
     }
 
+    const Tourist = await TouristDB.findById(req.body.tourist).exec()
+    
+    // Config Email 
+    var mailConfigurations = {
+        from: 'traveasycompany@gmail.com',
+        to: Tourist.email,
+        subject: 'booking updated',
+        html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
+        <h5> Your booking status has been updated.</h5>`
+    };
+
+    config.transporter.sendMail(mailConfigurations, function (error, info) {
+        if (error) return console.log(error);
+        console.log('Email Sent Successfully');
+        console.log(info);
+    })
 
     BookedHolidaysModel.findByIdAndUpdate(req.params.id, { $set: holiday }, { new: true },
         (err, holiday) => {
