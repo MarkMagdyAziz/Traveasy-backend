@@ -11,13 +11,12 @@ const holidaysSchema = new mongoose.Schema({
     ImgURL:[String],
     Period : String ,
     Price : Number ,
-    // IsBooking : Boolean ,
     // Tourist :  {
     //    type: mongoose.Schema.Types.ObjectId,
     //     ref: 'User',
     //   } ,
-    Guide : {type : mongoose.Schema.Types.ObjectId ,
-    ref : 'User'} 
+    // Guide : {type : mongoose.Schema.Types.ObjectId ,
+    // ref : 'User'} 
   });
   
   

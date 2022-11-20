@@ -32,10 +32,10 @@ exports.getHotelById = async (req, res) => {
 exports.postBookedHotel = async (req, res) => {
 
     const hotel = new BookedHotelsModel({
-        RoomCount: req.body.roomCount,
+        // RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         Single: req.body.single,
         Double: req.body.double,
         IsApprove: req.body.isApprove,
@@ -44,12 +44,11 @@ exports.postBookedHotel = async (req, res) => {
         endDate: req.body.endDate,
         Hotels: req.body.hotels,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     })
     
     const Tourist = await TouristDB.findById(req.body.tourist).exec()
-    
     // Config Email 
     var mailConfigurations = {
         from: 'traveasycompany@gmail.com',
@@ -73,16 +72,15 @@ exports.postBookedHotel = async (req, res) => {
     })
 }
 
-
 // edit booked hotel
 exports.editBookedHotel = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
 
     var hotel = {
-        RoomCount: req.body.roomCount,
+        // RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         Single: req.body.single,
         Double: req.body.double,
         startDate: req.body.startDate,
@@ -91,7 +89,7 @@ exports.editBookedHotel = async(req, res) => {
         Paid:req.body.paid,
         Hotels: req.body.hotels,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     }
 

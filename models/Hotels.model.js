@@ -8,7 +8,7 @@ const hotelsSchema = new mongoose.Schema({
      } ,
     Evaluation  : Number,
     ImgURL:[String],
-    Period : Number,
+    // Period : Number,
     // Single : Number,
     // Double : Number,
     // startDate: Date,

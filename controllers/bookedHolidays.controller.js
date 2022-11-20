@@ -36,7 +36,7 @@ exports.postBookedHoliday = async (req, res) => {
         RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         Transport: req.body.transport,
         IsApprove: req.body.isApprove,
         Paid:req.body.paid,
@@ -44,7 +44,7 @@ exports.postBookedHoliday = async (req, res) => {
         endDate: req.body.endDate,
         Holidays: req.body.holidays,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     })
     const Tourist = await TouristDB.findById(req.body.tourist).exec()
@@ -63,6 +63,7 @@ exports.postBookedHoliday = async (req, res) => {
         console.log('Email Sent Successfully');
         console.log(info);
     })
+   
 
     await holiday.save((err, holiday) => {
         (!err) ? res.send(holiday)
@@ -80,19 +81,18 @@ exports.editBookedHoliday = async(req, res) => {
         RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         IsApprove: req.body.isApprove,
         Paid:req.body.paid,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         Holidays: req.body.holidays,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     }
 
     const Tourist = await TouristDB.findById(req.body.tourist).exec()
-    
     // Config Email 
     var mailConfigurations = {
         from: 'traveasycompany@gmail.com',

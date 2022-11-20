@@ -46,7 +46,7 @@ exports.postHoliday = async(req, res)=> {
           Price : req.body.price ,
         //   IsBooking : req.body.isBokking ,
         //   Tourist :req.body.tourist ,
-          Guide :req.body.guide,
+        //   Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
 
@@ -70,7 +70,7 @@ exports.editHoliday = (req, res) => {
           Price : req.body.price ,
         //   IsBooking : req.body.isBokking ,
         //   Tourist :req.body.tourist ,
-          Guide :req.body.guide,
+        //   Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
 

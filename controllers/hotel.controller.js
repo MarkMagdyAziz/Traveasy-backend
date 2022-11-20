@@ -41,7 +41,7 @@ exports.postHotel = (req, res) => {
         City: req.body.city,
         Evaluation: req.body.evaluation,
         ImgURL: req.body.img,
-        Period: req.body.period,
+        // Period: req.body.period,
         // Single: req.body.single,
         // Double: req.body.double,
         Description: req.body.description,
