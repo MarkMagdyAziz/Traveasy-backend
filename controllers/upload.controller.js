@@ -11,8 +11,8 @@ const mongoClient = new MongoClient(url);
 
 const uploadFiles = async (req, res) => {
 
-  try { 
-      await upload(req, res);
+  try {
+    await upload(req, res);
     if (req.file <= 0) {
       return res.send({
         message: 'You must select at least 1 file.',
