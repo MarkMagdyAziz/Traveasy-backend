@@ -17,12 +17,12 @@ router.get('/price', getHolidayssByPrice)
 
 router.get('/:id', getById)
 
-router.post('/',[authJwt.verifyToken] , postHoliday)
-// router.post('/', postHoliday)
+// router.post('/',[authJwt.verifyToken] , postHoliday)
+router.post('/',[authJwt.verifyToken , authJwt.isModerator], postHoliday)
 
-router.put('/:id',[authJwt.verifyToken] , editHoliday)
-// router.put('/:id', editHoliday)
+// router.put('/:id',[authJwt.verifyToken] , editHoliday)
+router.put('/:id',[authJwt.verifyToken , authJwt.isModerator], editHoliday)
 
-router.delete('/:id',[authJwt.verifyToken] , deleteholiday)
+router.delete('/:id',[authJwt.verifyToken ,  authJwt.isModerator] , deleteholiday)
 
 module.exports = { holidaysRouter: router };

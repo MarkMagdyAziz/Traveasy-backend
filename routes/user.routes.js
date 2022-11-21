@@ -1,5 +1,6 @@
 const { authJwt } = require('../middlewares');
 const controller = require('../controllers/user.controller');
+const { verifySignUp } = require('../middlewares');
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -16,5 +17,5 @@ module.exports = function (app) {
   app.delete('/admin/users/remove/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser);
   app.get('/admin/statistics', [authJwt.verifyToken, authJwt.isAdmin], controller.statistics);
 
-  app.put('/user/edit/:id', [authJwt.verifyToken], controller.editUserProfile);
+  app.put('/user/edit/:id', [authJwt.verifyToken, verifySignUp.checkDublicate, verifySignUp.checkExistedRole], controller.editUserProfile);
 };
