@@ -9,7 +9,7 @@ router.get('/', getAll)
 
 
 // get total price
-router.get('/agg', getAggr)
+// router.get('/agg', getAggr)
 
 
 //get data by date
@@ -18,21 +18,16 @@ router.get('/date_range', getBookedByDate )
 //get data by user
 router.get('/user',[authJwt.verifyToken] , getByUserName )
 
-// router.get('/user', getByUserName)
-
 
 router.get('/:id',[authJwt.verifyToken] , getHotelById)
 
 
 router.post('/',[authJwt.verifyToken] , postBookedHotel)
 
-// router.post('/',postBookedHotel)
 
 router.put('/:id',[authJwt.verifyToken, authJwt.isModerator] ,editBookedHotel)
-// router.put('/:id',editBookedHotel)
 
 router.delete('/:id',[authJwt.verifyToken] ,deleteBookedHotel)
-// router.delete('/:id',deleteBookedHotel)
 
 
 

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const bookedHotelsSchema = new mongoose.Schema({
    
-    RoomCount  : Number,    
+    // RoomCount  : Number,    
     AdultCount : Number ,
     Child : Number,
-    Period : Number,
+    // Period : Number,
 
     Single : Number,
     Double : Number,
@@ -23,9 +23,9 @@ const bookedHotelsSchema = new mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       } ,
-    Guide : {type : mongoose.Schema.Types.ObjectId ,
-    ref : 'User'
-    } 
+    // Guide : {type : mongoose.Schema.Types.ObjectId ,
+    // ref : 'User'
+    // } 
   }
   ,
   

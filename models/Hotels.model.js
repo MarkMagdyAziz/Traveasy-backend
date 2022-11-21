@@ -7,8 +7,11 @@ const hotelsSchema = new mongoose.Schema({
        ref: 'City',
      } ,
     Evaluation  : Number,
-    ImgURL:[String],
-    Period : Number,
+    
+    // ImgURL:[String],
+
+
+    // Period : Number,
     // Single : Number,
     // Double : Number,
     // startDate: Date,

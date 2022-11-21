@@ -9,7 +9,7 @@ let config = require('../config/mailer.config')
 
 // get all booked hotels
 exports.getAll = async (req, res) => {
-    await BookedHotelsModel.find({}).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotels) => {
+    await BookedHotelsModel.find({}).populate('Hotels').populate("Tourist", "-password").exec((err, hotels) => {
         (!err) ? res.send(hotels)
             : console.log('error in get all hotels: ' + JSON.stringify(err, undefined, 2))
     })
@@ -20,7 +20,7 @@ exports.getAll = async (req, res) => {
 exports.getHotelById = async (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No Bookedhotel given id :  ${req.params.id}`);
 
-    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotel) => {
+    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").exec((err, hotel) => {
         (!err) ? res.send(hotel)
             : console.log('error in get booked hotel by id : ' + JSON.stringify(err, undefined, 2))
 
@@ -32,10 +32,10 @@ exports.getHotelById = async (req, res) => {
 exports.postBookedHotel = async (req, res) => {
 
     const hotel = new BookedHotelsModel({
-        RoomCount: req.body.roomCount,
+        // RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         Single: req.body.single,
         Double: req.body.double,
         IsApprove: req.body.isApprove,
@@ -44,12 +44,11 @@ exports.postBookedHotel = async (req, res) => {
         endDate: req.body.endDate,
         Hotels: req.body.hotels,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     })
     
     const Tourist = await TouristDB.findById(req.body.tourist).exec()
-    
     // Config Email 
     var mailConfigurations = {
         from: 'traveasycompany@gmail.com',
@@ -73,16 +72,15 @@ exports.postBookedHotel = async (req, res) => {
     })
 }
 
-
 // edit booked hotel
 exports.editBookedHotel = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No hotel given id :  ${req.params.id}`);
 
     var hotel = {
-        RoomCount: req.body.roomCount,
+        // RoomCount: req.body.roomCount,
         AdultCount: req.body.adultCount,
         Child: req.body.child,
-        Period: req.body.period,
+        // Period: req.body.period,
         Single: req.body.single,
         Double: req.body.double,
         startDate: req.body.startDate,
@@ -91,7 +89,7 @@ exports.editBookedHotel = async(req, res) => {
         Paid:req.body.paid,
         Hotels: req.body.hotels,
         Tourist: req.body.tourist,
-        Guide: req.body.guide
+        // Guide: req.body.guide
 
     }
 
@@ -165,7 +163,7 @@ exports.getBookedByDate = async (req, res) => {
                         $lte: new Date(new Date(endDate).setHours(23, 59, 59))
                     }
                 }]
-        }).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec()
+        }).populate('Hotels').populate("Tourist", "-password").exec()
 
         //4. Handle responses
         if (!BookedModels) {
