@@ -90,9 +90,47 @@ const download = async (req, res) => {
     });
   }
 };
+const getImg = async (req, res) => {
+  try {
+    await mongoClient.connect();
+
+    const database = mongoClient.db(dbConfig.DB);
+    const images = database.collection(dbConfig.imgBucket + '.files');
+
+    const cursor = images.find({});
+    // let { imgName } = req.query;
+
+    if ((await cursor.collation().count_documents) === 0) {
+      return res.status(500).send({
+        message: 'No files found!',
+      });
+    }
+
+    let fileInfos = [];
+    await cursor.forEach((doc) => {
+      fileInfos.push({
+        name: doc.filename,
+        url: baseUrl + doc.filename,
+      });
+    });
+    const regex = new RegExp('.*' + req.query.imgName  + '.*', 'g');
+
+   const img= fileInfos.filter((img)=> (
+      // img.name ===  req.query.imgName 
+      img.name.match(regex)
+    ))
+
+    return res.status(200).send(img);
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   uploadFiles,
   getListFiles,
   download,
+  getImg
 };
