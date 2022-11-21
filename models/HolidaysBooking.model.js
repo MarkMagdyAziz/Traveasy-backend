@@ -5,7 +5,7 @@ const holidaysBookingSchema = new mongoose.Schema({
     RoomCount  : Number,    
     AdultCount : Number ,
     Child : Number,
-    Period : Number,
+    // Period : Number,
     IsApprove : Boolean ,
     Paid: Boolean,
     startDate: Date,
@@ -21,8 +21,8 @@ const holidaysBookingSchema = new mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       } ,
-    Guide : {type : mongoose.Schema.Types.ObjectId ,
-    ref : 'User'} 
+    // Guide : {type : mongoose.Schema.Types.ObjectId ,
+    // ref : 'User'} 
   }
   ,
   

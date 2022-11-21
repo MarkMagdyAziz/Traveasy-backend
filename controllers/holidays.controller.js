@@ -6,7 +6,7 @@ const CityModel = require('../models/City.model')
 exports.getAll = async (req, res) => {
     await holidaysModel.find({}).populate('City')
     // .populate("Tourist", "-password")
-    .populate("Guide", "-password").exec((err, holidays) => {
+    .exec((err, holidays) => {
         (!err) ? res.send(holidays)
             : console.log('error in get all holidays: ' + JSON.stringify(err, undefined, 2))
     })
@@ -27,7 +27,7 @@ exports.getLimit = async (req, res) => {
 exports.getById = async(req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No holiday given id :  ${req.params.id}`);
 
-   await holidaysModel.findById(req.params.id).populate('City').populate("Guide", "-password").exec((err, holiday) => {
+   await holidaysModel.findById(req.params.id).populate('City').exec((err, holiday) => {
         (!err) ? res.send(holiday)
             : console.log('error in get holiday by id : ' + JSON.stringify(err, undefined, 2))
 
@@ -46,7 +46,7 @@ exports.postHoliday = async(req, res)=> {
           Price : req.body.price ,
         //   IsBooking : req.body.isBokking ,
         //   Tourist :req.body.tourist ,
-          Guide :req.body.guide,
+        //   Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
 
@@ -65,12 +65,14 @@ exports.editHoliday = (req, res) => {
           City : req.body.city ,
           Description: req.body.description,
           Evaluation  : req.body.evaluation,
-          ImgURL:req.body.img,
-          Period : req.body.period ,
+
+        //   ImgURL:req.body.img,
+          
+        Period : req.body.period ,
           Price : req.body.price ,
         //   IsBooking : req.body.isBokking ,
         //   Tourist :req.body.tourist ,
-          Guide :req.body.guide,
+        //   Guide :req.body.guide,
         //   startDate: req.body.startDate,
         //   endDate: req.body.endDate,
 
@@ -186,7 +188,7 @@ exports.getHolidayssByPrice = async (req, res) => {
                     }
                 }]
 
-        }).populate('City').populate("Guide", "-password").exec()
+        }).populate('City').exec()
 
         //4. Handle responses
         if (!PriceModel) {

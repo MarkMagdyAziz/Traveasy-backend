@@ -41,7 +41,6 @@ app.use(
   })
 );
 
-// Mongoose connection to MongoDB database
 db.mongoose
   //.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     .connect(`mongodb+srv://traveasy_db:oOq6ioaNBgbne6fc@clustertraveasydb.yivj1rk.mongodb.net/test`, {
@@ -104,10 +103,5 @@ function initial() {
   });
 
 }
-
-
-
-
-
 
 
