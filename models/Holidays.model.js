@@ -8,7 +8,9 @@ const holidaysSchema = new mongoose.Schema({
      } ,
     Description: String,
     Evaluation  : Number,
-    ImgURL:[String],
+
+    // ImgURL:[String],
+
     Period : String ,
     Price : Number ,
     // Tourist :  {

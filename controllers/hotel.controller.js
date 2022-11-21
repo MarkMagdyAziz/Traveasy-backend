@@ -40,7 +40,9 @@ exports.postHotel = (req, res) => {
         HotelName: req.body.hotelName,
         City: req.body.city,
         Evaluation: req.body.evaluation,
-        ImgURL: req.body.img,
+
+        // ImgURL: req.body.img,
+
         // Period: req.body.period,
         // Single: req.body.single,
         // Double: req.body.double,
@@ -70,7 +72,9 @@ exports.editHotel = (req, res) => {
         HotelName: req.body.hotelName,
         City: req.body.city,
         Evaluation: req.body.evaluation,
-        ImgURL: req.body.img,
+        
+        // ImgURL: req.body.img,
+        
         Period: req.body.period,
         // Single: req.body.single,
         // Double: req.body.double,

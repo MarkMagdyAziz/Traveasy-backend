@@ -10,7 +10,7 @@ let config = require('../config/mailer.config')
 
 // get all booked holidays
 exports.getAll = async (req, res) => {
-    await BookedHolidaysModel.find({}).populate('Holidays').populate("Tourist", "-password").populate("Guide", "-password").exec((err, holidays) => {
+    await BookedHolidaysModel.find({}).populate('Holidays').populate("Tourist", "-password").exec((err, holidays) => {
         (!err) ? res.send(holidays)
             : console.log('error in get all holidays: ' + JSON.stringify(err, undefined, 2))
     })
@@ -21,7 +21,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No holiday given id :  ${req.params.id}`);
 
-    await BookedHolidaysModel.findById(req.params.id).populate('Holidays').populate("Tourist", "-password").populate("Guide", "-password").exec((err, holiday) => {
+    await BookedHolidaysModel.findById(req.params.id).populate('Holidays').populate("Tourist", "-password").exec((err, holiday) => {
         (!err) ? res.send(holiday)
             : console.log('error in get booked holiday by id : ' + JSON.stringify(err, undefined, 2))
 
@@ -159,7 +159,7 @@ exports.getBookedByDate = async (req, res) => {
                         $lte: new Date(new Date(endDate).setHours(23, 59, 59))
                     }
                 }]
-        }).populate('Holidays').populate("Tourist", "-password").populate("Guide", "-password").exec()
+        }).populate('Holidays').populate("Tourist", "-password").exec()
 
         //4. Handle responses
         if (!BookedModels) {

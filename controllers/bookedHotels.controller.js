@@ -9,7 +9,7 @@ let config = require('../config/mailer.config')
 
 // get all booked hotels
 exports.getAll = async (req, res) => {
-    await BookedHotelsModel.find({}).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotels) => {
+    await BookedHotelsModel.find({}).populate('Hotels').populate("Tourist", "-password").exec((err, hotels) => {
         (!err) ? res.send(hotels)
             : console.log('error in get all hotels: ' + JSON.stringify(err, undefined, 2))
     })
@@ -20,7 +20,7 @@ exports.getAll = async (req, res) => {
 exports.getHotelById = async (req, res) => {
     (!ObjectId.isValid(req.params.id)) && res.status(400).send(`No Bookedhotel given id :  ${req.params.id}`);
 
-    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec((err, hotel) => {
+    await BookedHotelsModel.findById(req.params.id).populate('Hotels').populate("Tourist", "-password").exec((err, hotel) => {
         (!err) ? res.send(hotel)
             : console.log('error in get booked hotel by id : ' + JSON.stringify(err, undefined, 2))
 
@@ -163,7 +163,7 @@ exports.getBookedByDate = async (req, res) => {
                         $lte: new Date(new Date(endDate).setHours(23, 59, 59))
                     }
                 }]
-        }).populate('Hotels').populate("Tourist", "-password").populate("Guide", "-password").exec()
+        }).populate('Hotels').populate("Tourist", "-password").exec()
 
         //4. Handle responses
         if (!BookedModels) {
