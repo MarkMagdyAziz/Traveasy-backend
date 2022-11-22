@@ -17,7 +17,7 @@ verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).send({ message: 'Unauthorized!' });
     }
-    req.userId = decoded.id;
+    req.headers.userid = decoded.id;
     next();
   });
 };
@@ -25,7 +25,7 @@ verifyToken = (req, res, next) => {
 // check if roles of the user contain required role or not
 
 isAdmin = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
+  User.findById(req.headers.userid).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -48,18 +48,20 @@ isAdmin = (req, res, next) => {
 };
 
 isModerator = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
+  User.findById(req.headers.userid).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
+
     Role.find({ _id: { $in: user.roles } }, (err, roles) => {
+
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
       for (role of roles) {
-        if (role === 'moderator') {
+        if (role.name === 'moderator') {
           next();
           return;
         }

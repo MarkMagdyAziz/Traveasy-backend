@@ -17,9 +17,9 @@ router.get('/price', getHotelsByPrice)
 
 router.get('/:id', getById)
 // Add moderator
-router.post('/', [authJwt.verifyToken , authJwt.isModerator],postHotel)
+router.post('/', [authJwt.verifyToken ],postHotel)
  
-router.put('/:id',[authJwt.verifyToken , authJwt.isModerator], editHotel)
+router.put('/:id',[authJwt.verifyToken ], editHotel)
 
 router.delete('/:id',[authJwt.verifyToken , authJwt.isModerator], deletehotel)
 

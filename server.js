@@ -11,6 +11,7 @@ const { hotelsRouter } = require('./routes/hotels.routes')
 const { bookedHolidaysRouter } = require('./routes/bookedHoliddays.routes')
 const { bookedHotelsRouter } = require('./routes/bookedHotels.routes');
 const { FeedbackRouter } = require('./routes/feedback.routes');
+const {stripeRoutes} = require('./routes/stripe.routes');
 
 // front end credentials
 app.use((req, res, next) => {
@@ -69,6 +70,7 @@ app.use(["/hotel", "/hotels"], hotelsRouter);
 app.use(["/bookedHoliday", "/bookedHolidays"], bookedHolidaysRouter);
 app.use(["/bookedHotel", "/bookedHotels"], bookedHotelsRouter);
 app.use(["/feedback", "/feedbacks"], FeedbackRouter);
+app.use(["/stripe", "/stripes"], stripeRoutes);
 
 
 require('./routes/upload.routes')(app);
