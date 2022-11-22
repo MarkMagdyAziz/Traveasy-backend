@@ -13,7 +13,9 @@ const uploadFiles = async (req, res) => {
 
   try {
     await upload(req, res);
+
     if (req.file <= 0) {
+
       return res.send({
         message: 'You must select at least 1 file.',
       });
@@ -23,7 +25,6 @@ const uploadFiles = async (req, res) => {
       message: 'Files has been uploaded.',
     });
   } catch (error) {
-    //console.log(error);
 
     return res.status(500).send({
       message: `Error when trying upload many files: ${error}`,

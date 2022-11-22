@@ -16,6 +16,5 @@ module.exports = function (app) {
   app.get('/admin/users/filter', [authJwt.verifyToken, authJwt.isAdmin], controller.FilterUsers);
   app.delete('/admin/users/remove/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser);
   app.get('/admin/statistics', [authJwt.verifyToken, authJwt.isAdmin], controller.statistics);
-
-  app.put('/user/edit/:id', [authJwt.verifyToken, verifySignUp.checkDublicate, verifySignUp.checkExistedRole], controller.editUserProfile);
+  app.put('/user/edit/:id', [authJwt.verifyToken, verifySignUp.checkDublicate], controller.editUserProfile);
 };
