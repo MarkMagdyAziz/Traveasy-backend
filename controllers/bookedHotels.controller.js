@@ -55,7 +55,13 @@ exports.postBookedHotel = async (req, res) => {
         to: Tourist.email,
         subject: 'booking confirmed',
         html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
-        <h5> booking confirmed.</h5>`
+        <h5> booking confirmed.</h5>
+        <p>Approve : ${hotel.IsApprove ? 'yes' : 'no'} </p>
+        <p>Paid : ${hotel.Paid} </p>
+
+        <p>RoomCount : ${hotel.Single + hotel.Double} </p>
+        <p>start date : ${hotel.startDate } </p>
+        <p>end date : ${hotel.endDate } </p>`
     };
 
     config.transporter.sendMail(mailConfigurations, function (error, info) {
@@ -101,7 +107,13 @@ exports.editBookedHotel = async(req, res) => {
         to: Tourist.email,
         subject: 'booking updated',
         html: `<h2>Hi! ${Tourist.firstName} ${Tourist.lastName}</h2> 
-        <h5> Your booking status has been updated.</h5>`
+        <h5> Your booking status has been updated.</h5>
+        <p>Approve : ${hotel.IsApprove ? 'yes' : 'no'} </p>
+        <p>Paid : ${hotel.Paid} </p>
+
+        <p>RoomCount : ${hotel.Single + hotel.Double} </p>
+        <p>start date : ${hotel.startDate } </p>
+        <p>end date : ${hotel.endDate } </p>`
     };
 
     config.transporter.sendMail(mailConfigurations, function (error, info) {
