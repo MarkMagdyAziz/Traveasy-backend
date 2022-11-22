@@ -30,7 +30,6 @@ isAdmin = (req, res, next) => {
       res.status(500).send({ message: err });
       return;
     }
-
     Role.find({ _id: { $in: user.roles } }, (err, roles) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -54,13 +53,15 @@ isModerator = (req, res, next) => {
       res.status(500).send({ message: err });
       return;
     }
+
     Role.find({ _id: { $in: user.roles } }, (err, roles) => {
+
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
       for (role of roles) {
-        if (role === 'moderator') {
+        if (role.name === 'moderator') {
           next();
           return;
         }

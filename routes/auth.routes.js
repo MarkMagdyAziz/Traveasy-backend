@@ -9,7 +9,7 @@ module.exports = function (app) {
   });
   app.post(
     '/auth/signup',
-    [verifySignUp.checkDublicate, verifySignUp.checkExistedRole, authJwt.isAdmin],
+    [verifySignUp.checkDublicate, verifySignUp.checkExistedRole],
     controller.signup
   );
   app.post('/auth/signin', controller.signin);
