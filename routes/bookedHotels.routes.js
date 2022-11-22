@@ -27,7 +27,7 @@ router.post('/',[authJwt.verifyToken] , postBookedHotel)
 
 router.put('/:id',[authJwt.verifyToken, authJwt.isModerator] ,editBookedHotel)
 
-router.delete('/:id',[authJwt.verifyToken] ,deleteBookedHotel)
+router.delete('/:id',[authJwt.verifyToken,  authJwt.isModerator] ,deleteBookedHotel)
 
 
 

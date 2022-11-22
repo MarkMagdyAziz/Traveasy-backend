@@ -114,7 +114,7 @@ const getImg = async (req, res) => {
         url: baseUrl + doc.filename,
       });
     });
-    const regex = new RegExp('.*' + req.query.imgName  + '.*', 'g');
+    const regex = new RegExp('.*' + req.query.imgName  + '.*', 'gi');
 
    const img= fileInfos.filter((img)=> (
       // img.name ===  req.query.imgName 
