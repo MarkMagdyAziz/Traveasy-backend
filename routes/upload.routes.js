@@ -19,6 +19,7 @@ module.exports = (app) => {
   app.post('/upload',  uploadController.uploadFiles);
   app.get('/files',  uploadController.getListFiles);
   app.get('/files/:name', uploadController.download);
+  app.get('/img/imgName', uploadController.getImg);
 
   //return app.use('/', router);
 };
