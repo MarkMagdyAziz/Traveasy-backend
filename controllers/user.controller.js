@@ -76,7 +76,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.editUserProfile = async (req, res) => {
-  let { username, email, password, firstName, lastName, country, birthday } = req.body;
+  let { username, email, password, firstName, lastName, country, birthday, oldPassword } = req.body;
   const _id = req.params.id;
   let userObj = {
     username: username,
@@ -88,9 +88,27 @@ exports.editUserProfile = async (req, res) => {
     birthday: birthday,
   };
   try {
-    const updatedUser = await UsersDB.findByIdAndUpdate(_id, userObj).populate('roles').exec();
+    UsersDB.findById({ _id }).populate('roles', '-__v').exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err })
+        return
+      }
+      if (!user) {
+        return res.status(404).send({ message: 'User Not found.' })
+      }
+      var oldPasswordIsValid = bcrypt.compareSync(oldPassword, user.password)
+      if (!oldPasswordIsValid) {
+        return res.status(401).send({ message: 'Invalid Old Password!' })
+      }
+      const updatedUser = UsersDB.findByIdAndUpdate(_id, { $set: userObj }, { new: true }).populate('roles').exec().then(() => {
+        res.status(200).send(updatedUser);
+      }).catch((err) => {
+        if (err.message.indexOf("11000") != -1) {
+          res.status(409).send({ message: 'Duplicate! username or email is exist!' })
+        }
+      })
+    })
 
-    res.status(200).send(updatedUser);
   } catch (error) {
     res.status(404).json(error.message);
   }
