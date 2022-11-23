@@ -22,7 +22,7 @@ const GetAllFlightBooking = async (req, res) => {
         // search in tourist Ref
         if (req.query.Tourist) {
             const TouristSea = await TouristDB.findOne(
-                { "username": { $regex: new RegExp(req.query.Tourist, "i") } }
+                { _id : req.query.Tourist }
             )
             query.Tourist = TouristSea._id
         }
@@ -88,13 +88,16 @@ const CreateFlightBooking = async (req, res) => {
         <p>Infant: ${Flight.Infant}</p>
         <p>Cabin Class: ${Flight.CabinClass}</p>`
     };
-    console.log("mailConfigurations " + Flight);
-
-    config.transporter.sendMail(mailConfigurations, function (error, info) {
-        if (error) return console.log(error);
-        console.log('Email Sent Successfully');
-        console.log(info);
-    })
+    
+    try {
+        config.transporter.sendMail(mailConfigurations, function (error, info) {
+            if (error) return console.log(error);
+            console.log('Email Sent Successfully');
+        })
+    } catch (error) {
+        console.log('Email Sent error');
+    }
+   
 
     FlightBookingModel.save((err, model) => {
         if (err) {
