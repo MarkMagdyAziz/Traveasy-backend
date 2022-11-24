@@ -23,6 +23,7 @@ router.post('/', [authJwt.verifyToken], postBookedHoliday)
 
 router.put('/:id', [authJwt.verifyToken, authJwt.isModerator], editBookedHoliday)
 
+
 router.delete('/:id', [authJwt.verifyToken, authJwt.isModerator], deleteBookedHoliday)
 
 module.exports = { bookedHolidaysRouter: router };
