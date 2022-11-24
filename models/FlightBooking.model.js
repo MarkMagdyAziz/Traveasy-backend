@@ -8,9 +8,7 @@ const flightBookingSchema = new mongoose.Schema({
       default: Date.now
     } ,
      PassportNumber :{
-       type: String,
-       required: [true, 'PassportNumber is required!!'],
-       unique: true,
+       type: String
      },
      IsPaid :  {
       type: Boolean,
